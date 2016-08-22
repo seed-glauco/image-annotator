@@ -1,4 +1,4 @@
-# image-annotator
+# WP Image Annotator
 A plugin that adds a way to add annotations to images in WordPress without changing the image itself
 
 By: Moe Loubani
