@@ -1,0 +1,35 @@
+/*
+Want to add a custom font? Just update this font family with your font files (but keep the same name!)
+@font-face {
+    font-family: 'annotatorFont';
+}*/
+
+.font-test {
+    font-family: 'clearSansBold';
+    font-size: 32px;
+}
+
+.annotated-image-wrapper {
+    position: relative;
+    font-family: 'clearSansBold', sans-serif;
+    overflow: hidden;
+}
+
+.annotated-image {
+    position: absolute;
+    z-index: 1;
+}
+
+.live-canvas {
+    z-index: 5;
+    position: relative;
+}
+
+.annotation-text {
+    background: lightblue;
+    margin-left: 0;
+    padding-left: 30px;
+    margin-top: -8px;
+    padding-top: 20px;
+    padding-bottom: 26px;
+}

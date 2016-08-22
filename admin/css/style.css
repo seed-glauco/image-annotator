@@ -1,0 +1,90 @@
+/*
+Want to add a custom font? Just update this font family with your font files (but keep the same name!)
+@font-face {
+    font-family: 'annotatorFont';
+}*/
+
+#upload-area {
+    font-family: 'clearSansBold',sans-serif;
+}
+
+html, body {
+    height: 100%;
+}
+
+#container {
+    display: flex;
+    width: 100%;
+    background: #618056;
+    padding: 100px 0;
+}
+
+#work-area {
+    margin: auto;
+}
+
+ul.buttons {
+    list-style: none;
+    margin: 0 0 10px 0;
+    padding: 0;
+}
+
+ul.buttons li {
+    display: inline-block;
+    color: #fff;
+    background: #0084ff;
+    margin-right: 5px;
+    padding: 10px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+}
+
+ul.buttons li.active {
+    color: #fff;
+    background: #ffa2ba;
+}
+
+ul.buttons li:hover, ul.buttons:hover {
+    cursor: pointer;
+}
+
+#main-canvas, #canvas-area {
+    width: 100%;
+    background: transparent;
+    position: relative;
+}
+
+#canvas-area img {
+    position: absolute;
+    max-width: 100%;
+    min-width: 300px;
+    min-height: 150px;
+}
+
+#upload-area {
+    margin-bottom: 25px;
+}
+
+#image_annotation_json {
+    width: 100%;
+}
+
+#raw-code {
+    width: 100%;
+    clear: both;
+    padding-top: 25px;
+    display: none;
+}
+
+ul.buttons li.remove-button {
+    margin-right: 40px;
+}
+
+#raw-code textarea {
+    height: 600px;
+}
+
+#wpia-meta #upload_image {
+    display: none;
+}
