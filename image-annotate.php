@@ -1,11 +1,11 @@
 <?php
 /*
-  Plugin Name: WP Image Annotate
+  Plugin Name: Image Annotator
   Description: Adds the ability to create annotated images and then edit the annotations later.
   Version: 1.0
   Author: Moe Loubani
   Author URI: http://www.moeloubani.com
-  License: GPLv2
+  License: GPLv3
  */
 
 
