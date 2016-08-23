@@ -23,3 +23,12 @@
     z-index: 5;
     position: relative;
 }
+
+.annotation-text {
+    background: lightblue;
+    margin-left: 0;
+    padding-left: 30px;
+    margin-top: -8px;
+    padding-top: 20px;
+    padding-bottom: 26px;
+}
