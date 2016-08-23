@@ -29,14 +29,6 @@ Changing font sizes and colors is coming (although you can edit them in the JS f
 
 As soon as I have time I hope to expand this plugin to allow for stroke width (border width) changes, color changes, free drawing and more. Stay updated!
 
-== Screenshots ==
-
-1. This shows the editing process after one round of adding different annotations and shapes. You can see how things are labeled and the speech bubble is used.
-2. This shows how easy it is to just move objects around, remove objects, move the speech bubble around and decide where it goes.
-3. This shows you how to add an annotation to one of your posts or pages.
-4. Here is an example of the annotation in action on a desktop sized screen. The text below is stylable with CSS (or you can hide it!)
-5. This is an example of the annotation on a mobile device, note how the text has been replaced with a larger font and numbers that reference the text below so that it is still readable despite everything getting shrunk down.
-
 == Changelog ==
 
 = 1.0 =
