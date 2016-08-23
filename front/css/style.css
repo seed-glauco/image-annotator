@@ -1,11 +1,10 @@
-/*
-Want to add a custom font? Just update this font family with your font files (but keep the same name!)
+/* Use this font-face with your font files but leave the name to change the font
 @font-face {
     font-family: 'annotatorFont';
 }*/
 
 .font-test {
-    font-family: 'clearSansBold';
+    font-family: 'annotatorFont', sans-serif;
     font-size: 32px;
 }
 
@@ -23,13 +22,4 @@ Want to add a custom font? Just update this font family with your font files (bu
 .live-canvas {
     z-index: 5;
     position: relative;
-}
-
-.annotation-text {
-    background: lightblue;
-    margin-left: 0;
-    padding-left: 30px;
-    margin-top: -8px;
-    padding-top: 20px;
-    padding-bottom: 26px;
 }

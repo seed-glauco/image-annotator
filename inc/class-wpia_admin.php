@@ -12,6 +12,9 @@ class WPIA_Admin {
 
         //Adds current object (if one exists) to be edited to header
         add_action('admin_print_scripts', array($this, 'add_current_json'));
+
+        //Adds revision support for the post type's meta keys
+        add_filter('wp_post_revision_meta_keys', array($this, 'add_meta_keys_to_revision'));
     }
 
     public function register_post_type() {
@@ -46,7 +49,7 @@ class WPIA_Admin {
             'has_archive'        => true,
             'hierarchical'       => false,
             'menu_position'      => null,
-            'supports'           => array( 'title' )
+            'supports'           => array( 'title', 'revisions' )
         );
 
         register_post_type( 'annotation', $args );
@@ -91,6 +94,12 @@ class WPIA_Admin {
         echo "<script type='text/javascript'>\n";
         echo 'var currentWIPAObject = [' . get_post_meta($id, "wpia_annotation_data", true) . ', ' . get_post_meta($id, "wpia_annotation_canvas_size", true) . '];';
         echo "\n</script>";
+    }
+
+    function add_meta_keys_to_revision( $keys ) {
+        $keys[] = 'wpia_annotation_date';
+        $keys[] = 'wpia_annotation_canvas_size';
+        return $keys;
     }
 
 }

@@ -48,6 +48,19 @@ fabric.TextStandalone = fabric.util.createClass(fabric.IText, {
         this.set('fontFamily', 'annotatorFont');
         this.set('fontSize', 16);
         this.set('fontWeight', 'bold');
+        this.set('originX', 'center');
+        this.set('originY', 'center');
+
+        this.on('editing:entered', function(options) {
+            this.selectAll();
+        });
+
+        this.on('editing:exited', function(options) {
+            if(this.text.length === 0) {
+                this.canvas.setActiveObject(this);
+                document.getElementsByClassName('remove-button')[0].click();
+            }
+        });
     },
 
     toObject: function() {
@@ -124,44 +137,6 @@ fabric.RectangleToDrag.fromObject = function (object, callback) {
 
 fabric.RectangleToDrag.async = true;
 
-//This is the group that contains the rectangle and box that surrounds the text
-fabric.BubbleGroup = fabric.util.createClass(fabric.Group, {
-
-    type : 'BubbleGroup',
-
-    initialize : function(objects, options, isAlreadyGrouped) {
-        options || ( options = { });
-
-        this.callSuper('initialize', objects, options, isAlreadyGrouped);
-        this.set('name', options.name || '');
-        this.set('id', options.id || '');
-        this.set('rect', options.rect || null);
-        this.set('shape', options.shape || null);
-    },
-
-    toObject : function() {
-        return fabric.util.object.extend(this.callSuper('toObject'), {
-            name : this.get('name'),
-            shape : this.get('shape'),
-            id : this.get('id'),
-            rect : this.get('rect')
-        });
-    },
-
-    _render : function(ctx) {
-        this.callSuper('_render', ctx);
-    }
-});
-
-fabric.BubbleGroup.fromObject = function(object, callback) {
-    fabric.util.enlivenObjects(object.objects, function(enlivenedObjects) {
-        delete object.objects;
-        callback && callback(new fabric.BubbleGroup(enlivenedObjects, object, true));
-    });
-};
-
-fabric.BubbleGroup.async = true;
-
 //Draws the line with the arrow
 fabric.LineArrow = fabric.util.createClass(fabric.Line, {
 
@@ -170,6 +145,8 @@ fabric.LineArrow = fabric.util.createClass(fabric.Line, {
     initialize: function(element, options) {
         options || (options = {});
         this.callSuper('initialize', element, options);
+        this.set('lockRotation', true);
+        this.set('hasRotatingPoint', false);
     },
 
     toObject: function() {
@@ -208,8 +185,6 @@ fabric.LineArrow.fromObject = function (object, callback) {
 };
 
 fabric.LineArrow.async = true;
-
-
 
 jQuery(document).ready(function($) {
 
@@ -379,7 +354,7 @@ jQuery(document).ready(function($) {
 
         canvas.add(group);
 
-        var rect = makeRect(100, 200, groupID);
+        var rect = makeRect(135, 125, groupID);
         canvas.add(rect);
 
         var p1 = {x: group.getCenterPoint().x-10, y: group.getCenterPoint().y},
@@ -422,7 +397,7 @@ jQuery(document).ready(function($) {
 
         function addTextToRect(block, id) {
             var rectText = new fabric.TextStandalone('Double click to edit text', {
-                left: 50, //Take the block's position
+                left: 100, //Take the block's position
                 top: 50,
                 fill: 'black',
                 fontSize: 16,
@@ -434,9 +409,11 @@ jQuery(document).ready(function($) {
                 name: 'draggable',
                 lockRotation: true,
                 hasRotatingPoint: false,
-                lockScalingX: false,
-                lockScalingY: false,
+                lockScalingY: true,
+                lockScalingX: true,
+                selection: true
             });
+
             return rectText;
         }
     }
@@ -565,6 +542,8 @@ jQuery(document).ready(function($) {
             fontSize: 16,
             fontFamily: 'annotatorFont',
             fontWeight: 'bold',
+            lockScalingY: false,
+            lockScalingX: false
         });
 
         currentCanvas.insertAt(fabricText, 10000);
@@ -622,7 +601,7 @@ jQuery(document).ready(function($) {
 
     //Turns data on the canvas to JSON and stores it in the
     function storeCanvasToInput(canvas) {
-        var annotationData = canvas.toJSON();
+        var annotationData = canvas.toJSON(['lockMovementX', 'lockMovementY', 'lockRotation', 'lockScalingX', 'lockScalingY', 'lockUniScaling', 'hasRotatingPoint']);
         $('#image_annotation_json').val(JSON.stringify(annotationData));
 
         var originalSize = [imageToAnnotate.width(), imageToAnnotate.height()];
@@ -640,6 +619,9 @@ jQuery(document).ready(function($) {
 
         loadInitialCanvas(fabricCanvas);
         resizeCanvas(fabricCanvas);
+
+        fabricCanvas.hasRotatingPoint = false;
+        fabricCanvas.lockRotation = true;
 
 
         fabricCanvas.selection = false;
@@ -713,7 +695,7 @@ jQuery(document).ready(function($) {
 
             //Sends objects to the back so that the text is on the front
             fabricCanvas.on('mouse:down', function (option) {
-                if((typeof option.target !== "undefined" && option.target !== null) && (option.target.type === 'rectangle-to-drag' || option.target.type === 'BubbleGroup')) {
+                if((typeof option.target !== "undefined" && option.target !== null) && (option.target.type === 'rectangle-to-drag')) {
                     return;
                 }
 
@@ -842,25 +824,13 @@ jQuery(document).ready(function($) {
             //e.target.resizeToScale();
         });
 
-        //Handle sizing
-        /*fabric.Object.prototype.resizeToScale = function () {
-            if  (this.type !=='BubbleGroup') {
-                this.strokeWidth = this._origStrokeWidth / Math.max(this.scaleX, this.scaleY);
-            }
-            else {
-                this._objects.forEach( function(obj){
-                    console.log(obj);
-                    obj.strokeWidth = obj._origStrokeWidth / Math.max(obj.group.scaleX, obj.group.scaleY);
-                    obj.fontSize = 16;
-                });
-            }
-        };*/
-
 
         //Handle double click
         fabricCanvas.on('mouse:dblclick', function (options) {
             if(typeof options.target === 'undefined')
                 return;
+            else if(options.target.type === 'text-standalone') {
+            }
         });
 
         //Handles deletion

@@ -1,5 +1,6 @@
-/*
-Want to add a custom font? Just update this font family with your font files (but keep the same name!)
+/*Font for Canvas*/
+
+/* Use this font-face with your font files but leave the name to change the font
 @font-face {
     font-family: 'annotatorFont';
 }*/

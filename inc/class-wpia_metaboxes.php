@@ -11,7 +11,7 @@ class WPIA_Metaboxes {
 
     function wpia_register_edit_area() {
         add_meta_box( 'wpia-meta',
-            __( 'Image Annotation', 'wpia' ),
+            __( 'Image Annotation', 'image-annotator' ),
             array($this, 'wpia_display_callback'),
             'annotation'
         );
@@ -28,7 +28,7 @@ class WPIA_Metaboxes {
             <p>Image to annotate.</p>
             <div class="upload-fields">
                 <input id="upload_image" type="text" size="36" name="upload_image" value="<?php echo $image; ?>" />
-                <input id="upload_image_button" type="button" value="<?php _e('Choose image', 'wpia'); ?>" />
+                <input id="upload_image_button" type="button" value="<?php _e('Choose image', 'image-annotator'); ?>" />
             </div>
         </div>
         <div id="work-area">
@@ -45,7 +45,7 @@ class WPIA_Metaboxes {
                 </ul>
             </div>
             <div id="canvas-area" class="wpia-canvas-area">
-                <img src="<?php echo $image; ?>" alt="<?php _e('Annotator preview image', 'wpia'); ?>" id="wpia-preview-image">
+                <img src="<?php echo $image; ?>" alt="<?php _e('Annotator preview image', 'image-annotator'); ?>" id="wpia-preview-image">
                 <canvas id="main-canvas"></canvas>
             </div>
         </div>

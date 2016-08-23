@@ -94,6 +94,7 @@ fabric.RectangleToDrag = fabric.util.createClass(fabric.Rect, {
 
         this.set('name', options.name || '');
         this.set('id', options.id || '');
+        this.set('fillStyle', 'transparent');
     },
 
     toObject: function() {
@@ -246,10 +247,15 @@ jQuery(document).ready(function($) {
         $(this).imagesLoaded(function () {
             var fabricCanvasObj = new fabric.StaticCanvas('live-canvas-'+wpia);
             document.getElementById('live-canvas-'+wpia).fabric = fabricCanvasObj;
-            console.log(fabricCanvasObj);
 
             fabricCanvasObj.loadFromJSON(JSON.stringify(jsonToLoad));
             fabricCanvasObj.renderAll();
+
+            fabricCanvasObj.forEachObject(function(obj) {
+                if(obj.type === 'rectangle-to-drag') {
+                    obj.set('fill', 'transparent');
+                }
+            });
 
             var isMobile = false;
 
