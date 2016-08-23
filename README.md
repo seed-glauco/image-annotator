@@ -1,17 +1,4 @@
-=== Image Annotator ===
-
-Contributors: moeloubani1
-
-Tags: html5, canvas, annotation
-
-Requires at least: 4.1
-
-Tested up to: 4.6
-
-Stable tag: 4.6
-
-License: GPLv3
-
+# Image Annotator
 
 This is a plugin that uses the HTML5 canvas and FabricJS to allow you to add shapes and text on top of images and display those images. 
 
