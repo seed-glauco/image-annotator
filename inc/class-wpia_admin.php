@@ -43,6 +43,15 @@ class WPIA_Admin {
 	 * Settings page display callback.
 	 */
 	function settings_page() {
+		
+		$vanilla_tagger_editor=file_get_contents( __DIR__.'/../css/vanilla-tagger-editor.css');
+		$vanilla_tagger_navigation=file_get_contents( __DIR__.'/../css/vanilla-tagger-navigation.css');
+		$vanilla_tagger_theme=file_get_contents( __DIR__.'/../css/vanilla-tagger.theme.css');
+		$vanilla_tagger_editor_tagdata_tmpl=file_get_contents( __DIR__.'/../js/vanilla-tagger-editor.tagdata.tmpl.js');
+		$vanilla_tagger_editor_webc=file_get_contents( __DIR__.'/../js/vanilla-tagger-editor.webc.js');
+		$vanilla_tagger_navigation_webc=file_get_contents( __DIR__.'/../js/vanilla-tagger-navigation.webc.js');
+		$vanilla_tagger_webc=file_get_contents( __DIR__.'/../js/vanilla-tagger.webc.js');
+		
 		?>
 		<div class="wrap">
 			<h1>Image annotator settings</h1>
@@ -52,21 +61,37 @@ class WPIA_Admin {
 				<?php do_settings_sections( 'image-annotator-settings-group' ); ?>
 				<table class="form-table">
 					<tr valign="top">
-						<th scope="row">Tagger CSS</th>
-						<td><textarea type="text" name="image-annotator-tagger-css" style="width:800px;height:400px"><?php echo ( get_option( 'image-annotator-tagger-css' ) ); ?></textarea></td>
+						<th scope="row">Vanilla tagger editor (CSS)</th>
+						
+						<td><textarea type="text" name="vanilla_tagger_editor" style="width:100%;height:300px"><?php echo ( get_option( 'vanilla_tagger_editor',$vanilla_tagger_editor ) ); ?></textarea></td>
 					</tr>
 					<tr valign="top">
-						<th scope="row">Editor CSS</th>
-						<td><textarea type="text" name="image-annotator-editor-css" style="width:800px;height:400px"><?php echo ( get_option( 'image-annotator-editor-css' ) ); ?></textarea></td>
+						<th scope="row">Vanilla tagger navigator (CSS)</th>
+						<td><textarea type="text" name="vanilla_tagger_navigation" style="width:100%;height:300px"><?php echo ( get_option( 'vanilla_tagger_navigation',$vanilla_tagger_navigation ) ); ?></textarea></td>
 					</tr>
 					<tr valign="top">
-						<th scope="row">Navigator CSS</th>
-						<td><textarea type="text" name="image-annotator-navigator-css" style="width:800px;height:400px"><?php echo ( get_option( 'image-annotator-navigator-css' ) ); ?></textarea></td>
+						<th scope="row">Vanilla tagger theme (CSS)</th>
+						<td><textarea type="text" name="vanilla_tagger_theme" style="width:100%;height:300px"><?php echo ( get_option( 'vanilla_tagger_theme',$vanilla_tagger_theme ) ); ?></textarea></td>
 					</tr>	
 					<tr valign="top">
-						<th scope="row">Editor template (JS)</th>
-						<td><textarea type="text" name="image-annotator-editor-js" style="width:800px;height:400px"><?php echo ( get_option( 'image-annotator-editor-js' ) ); ?></textarea></td>
+						<th scope="row">Vanilla tagger editor tagdata tmpl (JS)</th>
+						<td><textarea type="text" name="vanilla_tagger_editor_tagdata_tmpl" style="width:100%;height:300px"><?php echo ( get_option( 'vanilla_tagger_editor_tagdata_tmpl',$vanilla_tagger_editor_tagdata_tmpl ) ); ?></textarea></td>
 					</tr>						
+
+					<tr valign="top">
+						<th scope="row">Vanilla tagger editor webc (JS)</th>
+						<td><textarea type="text" name="vanilla_tagger_editor_webc" style="width:100%;height:300px"><?php echo ( get_option( 'vanilla_tagger_editor_webc',$vanilla_tagger_editor_webc ) ); ?></textarea></td>
+					</tr>						
+					<tr valign="top">
+						<th scope="row">Vanilla tagger navigation webc (JS)</th>
+						<td><textarea type="text" name="vanilla_tagger_navigation_webc" style="width:100%;height:300px"><?php echo ( get_option( 'vanilla_tagger_navigation_webc',$vanilla_tagger_navigation_webc ) ); ?></textarea></td>
+					</tr>						
+					<tr valign="top">
+						<th scope="row">Vanilla tagger webc (JS)</th>
+						<td><textarea type="text" name="vanilla_tagger_webc" style="width:100%;height:300px"><?php echo ( get_option( 'vanilla_tagger_webc',$vanilla_tagger_webc ) ); ?></textarea></td>
+					</tr>						
+
+					
 				</table>
 
 				<?php submit_button(); ?>
@@ -77,10 +102,10 @@ class WPIA_Admin {
 	}
 
 	function register_image_annotator_settings() { // whitelist options
-		register_setting( 'image-annotator-settings-group', 'image-annotator-tagger-css' );
-		register_setting( 'image-annotator-settings-group', 'image-annotator-editor-css' );
-		register_setting( 'image-annotator-settings-group', 'image-annotator-navigator-css' );
-		register_setting( 'image-annotator-settings-group', 'image-annotator-editor-js' );
+		register_setting( 'image-annotator-settings-group', 'vanilla_tagger_editor' );
+		register_setting( 'image-annotator-settings-group', 'vanilla_tagger_navigation' );
+		register_setting( 'image-annotator-settings-group', 'vanilla_tagger_theme' );
+		register_setting( 'image-annotator-settings-group', 'vanilla_tagger_editor_tagdata_tmpl' );
 	}
 
 	//Seed added:END
