@@ -1,5 +1,5 @@
 # Image Annotator
-
+ 
 This is a plugin that uses the HTML5 canvas and FabricJS to allow you to add shapes and text on top of images and display those images. 
 
 == Description ==
