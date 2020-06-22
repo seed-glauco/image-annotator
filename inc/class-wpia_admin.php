@@ -161,17 +161,21 @@ class WPIA_Admin {
 		if ( get_post_type() !== 'annotation' )
 			return;
 
-		wp_enqueue_style( 'thickbox' );
-		wp_enqueue_style( 'wpia-admin-fontawesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
-		wp_enqueue_style( 'wpia-admin-style', plugins_url( '../admin/css/style.css', __FILE__ ) );
-
-		wp_enqueue_script( 'media-upload' );
-		wp_enqueue_script( 'thickbox' );
-
-		wp_enqueue_script( 'wpia-admin-fabric', plugins_url( '../lib/fabricjs/js/fabric.js', __FILE__ ), array( 'jquery' ) );
-		wp_enqueue_script( 'wpia-admin-fabricex', plugins_url( '../admin/js/fabric.canvasex.js', __FILE__ ), array( 'wpia-admin-fabric' ) );
-		wp_enqueue_script( 'wpia-admin-imagesloaded', plugins_url( '../lib/imagesLoaded/imagesloaded.pkgd.min.js', __FILE__ ), array( 'jquery' ) );
-		wp_enqueue_script( 'wpia-admin-scripts', plugins_url( '../admin/js/script.js', __FILE__ ), array( 'jquery', 'media-upload', 'thickbox' ) );
+			wp_enqueue_style('thickbox');
+		
+			wp_enqueue_style('wpia-vtagger-editor-style', plugins_url('../lib/vanilla-tagger/plugins/editor/vanilla-tagger-editor.css', __FILE__));
+			
+			wp_enqueue_script('media-upload');
+			wp_enqueue_script('thickbox');
+			
+			wp_enqueue_script('wpia-vtagger-js', plugins_url('../lib/vanilla-tagger/vanilla-tagger.webc.js', __FILE__));
+	
+			wp_enqueue_script('wpia-vtagger-editor-tmpl-js', plugins_url('../lib/vanilla-tagger/plugins/editor/vanilla-tagger-editor.tagdata.tmpl.js', __FILE__), array('wpia-vtagger-js'));		
+	
+	
+			wp_enqueue_script('wpia-vtagger-editor-js', plugins_url('../lib/vanilla-tagger/plugins/editor/vanilla-tagger-editor.webc.js', __FILE__), array('wpia-vtagger-js','wpia-vtagger-editor-tmpl-js'));
+					
+			wp_enqueue_script('wpia-admin-scripts', plugins_url('../admin/js/script.js', __FILE__), array('media-upload','thickbox','wpia-vtagger-js','wpia-vtagger-editor-tmpl-js','wpia-vtagger-editor-js'));
 	}
 
 	function add_current_json() {

@@ -32,21 +32,20 @@ class WPIA_Metaboxes {
             </div>
         </div>
         <div id="work-area">
-            <div id="wpia-toolbar">
-                <ul class="buttons">
-                    <li class="select-button tool-button active"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></li>
-                    <li class="remove-button"><i class="fa fa-times" aria-hidden="true"></i></li>
-                    <li class="circle-button tool-button"><i class="fa fa-circle-o" aria-hidden="true"></i></li>
-                    <li class="rectangle-button tool-button"><i class="fa fa-square-o" aria-hidden="true"></i></li>
-                    <li class="arrow-button tool-button"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></li>
-                    <li class="text-button tool-button"><i class="fa fa-i-cursor" aria-hidden="true"></i></li>
-                    <li class="speech-bubble-button tool-button"><i class="fa fa-commenting-o" aria-hidden="true"></i></li>
-
-                </ul>
+        <div id="wpia-toolbar">
             </div>
             <div id="canvas-area" class="wpia-canvas-area">
-                <img src="<?php echo $image; ?>" alt="<?php _e('Annotator preview image', 'image-annotator'); ?>" id="wpia-preview-image">
-                <canvas id="main-canvas"></canvas>
+                <vanilla-tagger-editor
+                            id="wpia-preview-image"			
+                            src="<?php echo $image; ?>"
+                            placeholder="#wpia-toolbar"
+
+                    >
+                    Your browser doesn't currently support this component<br />
+                    <a href="https://browsehappy.com/" target="_blank"
+                        >Please , update your browser</a
+                    >
+                    </vanilla-tagger-editor>						              
             </div>
         </div>
         <div id="raw-code">
