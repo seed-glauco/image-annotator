@@ -52,13 +52,21 @@ class WPIA_Admin {
 				<?php do_settings_sections( 'image-annotator-settings-group' ); ?>
 				<table class="form-table">
 					<tr valign="top">
-						<th scope="row">Frontend CSS</th>
-						<td><textarea type="text" name="image-annotator-frontend-css" style="width:500px;height:500px"><?php echo ( get_option( 'image-annotator-frontend-css' ) ); ?></textarea></td>
+						<th scope="row">Tagger CSS</th>
+						<td><textarea type="text" name="image-annotator-tagger-css" style="width:800px;height:600px"><?php echo ( get_option( 'image-annotator-tagger-css' ) ); ?></textarea></td>
 					</tr>
 					<tr valign="top">
-						<th scope="row">Backend CSS</th>
-						<td><textarea type="text" name="image-annotator-backend-css" style="width:500px;height:500px"><?php echo ( get_option( 'image-annotator-backend-css' ) ); ?></textarea></td>
+						<th scope="row">Editor CSS</th>
+						<td><textarea type="text" name="image-annotator-editor-css" style="width:800px;height:600px"><?php echo ( get_option( 'image-annotator-editor-css' ) ); ?></textarea></td>
 					</tr>
+					<tr valign="top">
+						<th scope="row">Navigator CSS</th>
+						<td><textarea type="text" name="image-annotator-navigator-css" style="width:800px;height:600px"><?php echo ( get_option( 'image-annotator-navigator-css' ) ); ?></textarea></td>
+					</tr>	
+					<tr valign="top">
+						<th scope="row">Editor template (JS)</th>
+						<td><textarea type="text" name="image-annotator-editor-js" style="width:800px;height:600px"><?php echo ( get_option( 'image-annotator-editor-js' ) ); ?></textarea></td>
+					</tr>						
 				</table>
 
 				<?php submit_button(); ?>
@@ -69,8 +77,10 @@ class WPIA_Admin {
 	}
 
 	function register_image_annotator_settings() { // whitelist options
-		register_setting( 'image-annotator-settings-group', 'image-annotator-frontend-css' );
-		register_setting( 'image-annotator-settings-group', 'image-annotator-backend-css' );
+		register_setting( 'image-annotator-settings-group', 'image-annotator-tagger-css' );
+		register_setting( 'image-annotator-settings-group', 'image-annotator-editor-css' );
+		register_setting( 'image-annotator-settings-group', 'image-annotator-navigator-css' );
+		register_setting( 'image-annotator-settings-group', 'image-annotator-editor-js' );
 	}
 
 	//Seed added:END

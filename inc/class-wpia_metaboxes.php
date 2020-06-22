@@ -32,6 +32,10 @@ class WPIA_Metaboxes {
             </div>
         </div>
         <div id="work-area">
+			
+			
+			
+			
             <div id="wpia-toolbar">
                 <ul class="buttons">
                     <li class="select-button tool-button active"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></li>
@@ -48,6 +52,14 @@ class WPIA_Metaboxes {
                 <img src="<?php echo $image; ?>" alt="<?php _e('Annotator preview image', 'image-annotator'); ?>" id="wpia-preview-image">
                 <canvas id="main-canvas"></canvas>
             </div>
+			
+			
+			
+			
+			
+			
+			
+			
         </div>
         <div id="raw-code">
             <p>Raw JSON for annotations</p>
