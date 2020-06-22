@@ -53,19 +53,19 @@ class WPIA_Admin {
 				<table class="form-table">
 					<tr valign="top">
 						<th scope="row">Tagger CSS</th>
-						<td><textarea type="text" name="image-annotator-tagger-css" style="width:800px;height:600px"><?php echo ( get_option( 'image-annotator-tagger-css' ) ); ?></textarea></td>
+						<td><textarea type="text" name="image-annotator-tagger-css" style="width:800px;height:400px"><?php echo ( get_option( 'image-annotator-tagger-css' ) ); ?></textarea></td>
 					</tr>
 					<tr valign="top">
 						<th scope="row">Editor CSS</th>
-						<td><textarea type="text" name="image-annotator-editor-css" style="width:800px;height:600px"><?php echo ( get_option( 'image-annotator-editor-css' ) ); ?></textarea></td>
+						<td><textarea type="text" name="image-annotator-editor-css" style="width:800px;height:400px"><?php echo ( get_option( 'image-annotator-editor-css' ) ); ?></textarea></td>
 					</tr>
 					<tr valign="top">
 						<th scope="row">Navigator CSS</th>
-						<td><textarea type="text" name="image-annotator-navigator-css" style="width:800px;height:600px"><?php echo ( get_option( 'image-annotator-navigator-css' ) ); ?></textarea></td>
+						<td><textarea type="text" name="image-annotator-navigator-css" style="width:800px;height:400px"><?php echo ( get_option( 'image-annotator-navigator-css' ) ); ?></textarea></td>
 					</tr>	
 					<tr valign="top">
 						<th scope="row">Editor template (JS)</th>
-						<td><textarea type="text" name="image-annotator-editor-js" style="width:800px;height:600px"><?php echo ( get_option( 'image-annotator-editor-js' ) ); ?></textarea></td>
+						<td><textarea type="text" name="image-annotator-editor-js" style="width:800px;height:400px"><?php echo ( get_option( 'image-annotator-editor-js' ) ); ?></textarea></td>
 					</tr>						
 				</table>
 
