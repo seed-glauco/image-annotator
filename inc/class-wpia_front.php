@@ -8,10 +8,8 @@ class WPIA_Front {
 
 		//Adds an empty JS object to the header to be used later on
 		//add_action( 'wp_head', array( $this, 'add_header_variable' ) );
-
 		//Adds the styles and scripts to run things and make them look good
 		//add_action( 'wp_enqueue_scripts', array( $this, 'add_scripts_styles' ) );
-
 		//Adds the shortcode button in the TinyMCE editor
 		add_action( 'init', array( $this, 'shortcode_button' ) );
 
@@ -51,6 +49,8 @@ class WPIA_Front {
 		$atts = shortcode_atts(
 				array(
 					'id' => '',
+					'navigator' => '0',
+					'placeholder' => ''
 				),
 				$atts,
 				'wpia_image'
@@ -76,22 +76,44 @@ class WPIA_Front {
 				//$annotation_text = array();
 
 				ob_start();
-				?>
 
-				<script>
-				<?= get_option( 'vanilla_tagger_webc' ) ?>
-				</script>	
-				<vanilla-tagger
-					id="wpia-preview-image"			
-					src="<?php echo $image; ?>"
-					placeholder="#wpia-toolbar"
-					data-tags="<?= esc_attr( $data ) ?>"
-					data-theme-text="<?= esc_attr( get_option( 'vanilla_tagger_theme' ) ) ?>"
-					>
-					Your browser doesn't currently support this component<br />
-					<a href="https://browsehappy.com/" target="_blank">Please , update your browser</a>
-				</vanilla-tagger>			
+				if ( isset( $atts['navigator'] ) && !empty( $atts['navigator'] ) && $atts['navigator'] == '1' && isset( $atts['placeholder'] ) && !empty( $atts['placeholder'] ) ):
+					?>
+					<style>
+					<?= get_option( 'vanilla_tagger_navigation' ) ?>
+					</style>	
+					<script>
+					<?= get_option( 'vanilla_tagger_webc' ) ?>
+					<?= get_option( 'vanilla_tagger_navigation_webc' ) ?>
+					</script>	
+					<vanilla-tagger-navigation
+						id="v-tagger"			
+						src="<?= $image ?>"
+						placeholder="<?= $atts['placeholder'] ?>"
+						data-tags="<?= esc_attr( $data ) ?>"
+						data-theme-text="<?= esc_attr( get_option( 'vanilla_tagger_theme' ) ) ?>"
+						>
+						Your browser doesn't currently support this component<br />
+						<a href="https://browsehappy.com/" target="_blank">Please , update your browser</a>
+					</vanilla-tagger-navigation>			
+					<?php
+				else:
+					?>
+					<script>
+					<?= get_option( 'vanilla_tagger_webc' ) ?>
+					</script>	
+					<vanilla-tagger
+						id="wpia-preview-image"			
+						src="<?= $image ?>"
+						placeholder="#wpia-toolbar"
+						data-tags="<?= esc_attr( $data ) ?>"
+						data-theme-text="<?= esc_attr( get_option( 'vanilla_tagger_theme' ) ) ?>"
+						>
+						Your browser doesn't currently support this component<br />
+						<a href="https://browsehappy.com/" target="_blank">Please , update your browser</a>
+					</vanilla-tagger>			
 				<?php
+				endif;
 				$output = ob_get_clean();
 			}
 		}
