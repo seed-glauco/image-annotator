@@ -7,10 +7,10 @@ class WPIA_Front {
 		add_shortcode( 'wpia_image', array( $this, 'shortcode' ) );
 
 		//Adds an empty JS object to the header to be used later on
-		add_action( 'wp_head', array( $this, 'add_header_variable' ) );
+		//add_action( 'wp_head', array( $this, 'add_header_variable' ) );
 
 		//Adds the styles and scripts to run things and make them look good
-		add_action( 'wp_enqueue_scripts', array( $this, 'add_scripts_styles' ) );
+		//add_action( 'wp_enqueue_scripts', array( $this, 'add_scripts_styles' ) );
 
 		//Adds the shortcode button in the TinyMCE editor
 		add_action( 'init', array( $this, 'shortcode_button' ) );
@@ -71,29 +71,10 @@ class WPIA_Front {
 				$image = get_post_meta( get_the_ID(), 'wpia_annotation_image', true );
 				$data = get_post_meta( get_the_ID(), 'wpia_annotation_data', true );
 
-				$original_size = get_post_meta( get_the_ID(), 'wpia_annotation_canvas_size', true );
-				$annotation_data = json_decode( $data );
-				$annotation_text = array();
-				/*
-				  $is_mobile = $this->wpia_is_mobile();
-				  $counter = 0;
+				//$original_size = get_post_meta( get_the_ID(), 'wpia_annotation_canvas_size', true );
+				//$annotation_data = json_decode( $data );
+				//$annotation_text = array();
 
-				  foreach($annotation_data->objects as $object) {
-				  if($object->type === 'text-standalone') {
-
-				  $annotation_text[] = $object->text;
-				  if($is_mobile) {
-				  $counter++;
-				  $object->text = strval($counter);
-				  $object->fontSize = 48;
-				  }
-				  }
-				  }
-
-				  if($is_mobile) {
-				  $data = json_encode($annotation_data);
-				  }
-				 */
 				ob_start();
 				?>
 
@@ -119,7 +100,7 @@ class WPIA_Front {
 		wp_reset_postdata();
 		return $output;
 	}
-
+/*
 	public function add_scripts_styles() {
 		wp_register_script( 'wpia-front-fabric', plugins_url( '../lib/fabricjs/js/fabric.js', __FILE__ ), array( 'jquery' ) );
 		wp_register_script( 'wpia-front-imagesloaded', plugins_url( '../lib/imagesLoaded/imagesloaded.pkgd.min.js', __FILE__ ), array( 'jquery' ) );
@@ -130,7 +111,7 @@ class WPIA_Front {
 	public function add_header_variable() {
 		echo '<script type="text/javascript"> var wpiaGeneratedImage = {}; </script>';
 	}
-
+*/
 	public function shortcode_button() {
 		if ( !current_user_can( 'edit_posts' ) && !current_user_can( 'edit_pages' ) ) {
 			return;
