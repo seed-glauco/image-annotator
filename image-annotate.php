@@ -7,7 +7,6 @@
   Author: Moe Loubani
   Author URI: http://www.moeloubani.com
   License: GPLv3
-  GitHub Plugin URI: seed-glauco/image-annotator
   GitHub Plugin URI: https://github.com/seed-glauco/image-annotator
  */
 
