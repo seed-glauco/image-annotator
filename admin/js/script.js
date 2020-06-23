@@ -14,6 +14,10 @@ jQuery(document).ready(function () {
     jQuery("#upload_image").val(imgurl);
     jQuery("#wpia-preview-image").attr("src", imgurl);
 
+    jQuery("#wpia-preview-image").on("VanillaTagger:tagsLoaded", function (e) {
+      jQuery("#image_annotation_json").text(JSON.stringify(e.detail));
+    });
+
     //console.log(imgurl);
     tb_remove();
   };
