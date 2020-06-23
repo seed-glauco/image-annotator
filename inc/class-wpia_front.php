@@ -96,22 +96,11 @@ class WPIA_Front {
 			}
 		}
 
-		wp_enqueue_script( 'wpia-front-script' );
+		//wp_enqueue_script( 'wpia-front-script' );
 		wp_reset_postdata();
 		return $output;
 	}
-/*
-	public function add_scripts_styles() {
-		wp_register_script( 'wpia-front-fabric', plugins_url( '../lib/fabricjs/js/fabric.js', __FILE__ ), array( 'jquery' ) );
-		wp_register_script( 'wpia-front-imagesloaded', plugins_url( '../lib/imagesLoaded/imagesloaded.pkgd.min.js', __FILE__ ), array( 'jquery' ) );
-		wp_register_script( 'wpia-front-script', plugins_url( '../front/js/script.js', __FILE__ ), array( 'jquery', 'wpia-front-fabric', 'wpia-front-imagesloaded' ) );
-		wp_enqueue_style( 'wpia-front-style', plugins_url( '../front/css/style.css', __FILE__ ) );
-	}
 
-	public function add_header_variable() {
-		echo '<script type="text/javascript"> var wpiaGeneratedImage = {}; </script>';
-	}
-*/
 	public function shortcode_button() {
 		if ( !current_user_can( 'edit_posts' ) && !current_user_can( 'edit_pages' ) ) {
 			return;
