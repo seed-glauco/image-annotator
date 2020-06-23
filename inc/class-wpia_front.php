@@ -43,6 +43,29 @@ class WPIA_Front {
 	// Add shortcode and return output
 	public function shortcode( $atts ) {
 
+
+		if ( !empty( get_option( 'vanilla_tagger_navigation' ) ) ):
+			$vanilla_tagger_navigation = get_option( 'vanilla_tagger_navigation' );
+		else:
+			$vanilla_tagger_navigation = file_get_contents( VANILLA_TAGGER_NAVIGATION_CSS_FILE );
+		endif;
+		if ( !empty( get_option( 'vanilla_tagger_theme' ) ) ):
+			$vanilla_tagger_theme = get_option( 'vanilla_tagger_theme' );
+		else:
+			$vanilla_tagger_theme = file_get_contents( VANILLA_TAGGER_THEME_CSS_FILE );
+		endif;
+		if ( !empty( get_option( 'vanilla_tagger_navigation_webc' ) ) ):
+			$vanilla_tagger_navigation_webc = get_option( 'vanilla_tagger_navigation_webc' );
+		else:
+			$vanilla_tagger_navigation_webc = file_get_contents( VANILLA_TAGGER_NAVIGATION_WEBC_JS_FILE );
+		endif;
+		if ( !empty( get_option( 'vanilla_tagger_webc' ) ) ):
+			$vanilla_tagger_webc = get_option( 'vanilla_tagger_webc' );
+		else:
+			$vanilla_tagger_webc = file_get_contents( VANILLA_TAGGER_WEBC_JS_FILE );
+		endif;
+
+
 		$output = '';
 
 		// Attributes
@@ -65,6 +88,8 @@ class WPIA_Front {
 
 		$annotation_query = new WP_Query( $args );
 
+
+
 		if ( $annotation_query->have_posts() ) {
 			while ( $annotation_query->have_posts() ) {
 				$annotation_query->the_post();
@@ -75,23 +100,26 @@ class WPIA_Front {
 				//$annotation_data = json_decode( $data );
 				//$annotation_text = array();
 
+
+
+
 				ob_start();
 
 				if ( isset( $atts['navigator'] ) && !empty( $atts['navigator'] ) && $atts['navigator'] == '1' && isset( $atts['placeholder'] ) && !empty( $atts['placeholder'] ) ):
 					?>
 					<style>
-					<?= get_option( 'vanilla_tagger_navigation' ) ?>
+					<?= $vanilla_tagger_navigation ?>
 					</style>	
 					<script>
-					<?= get_option( 'vanilla_tagger_webc' ) ?>
-					<?= get_option( 'vanilla_tagger_navigation_webc' ) ?>
+					<?= $vanilla_tagger_webc ?>
+					<?= $vanilla_tagger_navigation_webc ?>
 					</script>	
 					<vanilla-tagger-navigation
 						id="v-tagger"			
 						src="<?= $image ?>"
 						placeholder="<?= $atts['placeholder'] ?>"
 						data-tags="<?= esc_attr( $data ) ?>"
-						data-theme-text="<?= esc_attr( get_option( 'vanilla_tagger_theme' ) ) ?>"
+						data-theme-text="<?= esc_attr( $vanilla_tagger_theme ) ?>"
 						>
 						Your browser doesn't currently support this component<br />
 						<a href="https://browsehappy.com/" target="_blank">Please , update your browser</a>
@@ -100,14 +128,14 @@ class WPIA_Front {
 				else:
 					?>
 					<script>
-					<?= get_option( 'vanilla_tagger_webc' ) ?>
+					<?= $vanilla_tagger_webc ?>
 					</script>	
 					<vanilla-tagger
 						id="wpia-preview-image"			
 						src="<?= $image ?>"
 						placeholder="#wpia-toolbar"
 						data-tags="<?= esc_attr( $data ) ?>"
-						data-theme-text="<?= esc_attr( get_option( 'vanilla_tagger_theme' ) ) ?>"
+						data-theme-text="<?= esc_attr( $vanilla_tagger_theme ) ?>"
 						>
 						Your browser doesn't currently support this component<br />
 						<a href="https://browsehappy.com/" target="_blank">Please , update your browser</a>
