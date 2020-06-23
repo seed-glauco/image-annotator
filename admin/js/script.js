@@ -3,6 +3,11 @@ jQuery(document).ready(function () {
     tb_show("", "media-upload.php?type=image&amp;TB_iframe=true");
     return false;
   });
+
+  jQuery("#wpia-preview-image").on("VanillaTagger:tagsLoaded", function (e) {
+    jQuery("#image_annotation_json").text(JSON.stringify(e.detail));
+  });
+
   window.send_to_editor = function (html) {
     var imgurl,
       srcCheck = jQuery(html).attr("src");
@@ -13,10 +18,6 @@ jQuery(document).ready(function () {
     }
     jQuery("#upload_image").val(imgurl);
     jQuery("#wpia-preview-image").attr("src", imgurl);
-
-    jQuery("#wpia-preview-image").on("VanillaTagger:tagsLoaded", function (e) {
-      jQuery("#image_annotation_json").text(JSON.stringify(e.detail));
-    });
 
     //console.log(imgurl);
     tb_remove();
