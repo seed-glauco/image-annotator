@@ -164,6 +164,8 @@ class WPIA_Admin {
 			wp_enqueue_style('thickbox');
 		
 			wp_enqueue_style('wpia-vtagger-editor-style', plugins_url('../lib/vanilla-tagger/plugins/editor/vanilla-tagger-editor.css', __FILE__));
+
+			wp_enqueue_style('wpia-admin-style', plugins_url('../admin/css/style.css', __FILE__));			
 			
 			wp_enqueue_script('media-upload');
 			wp_enqueue_script('thickbox');
