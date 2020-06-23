@@ -17,7 +17,7 @@ class WPIA_Admin {
 
 		//Seed added:BEGIN
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-		add_action( 'admin_init', array( $this, 'register_image_annotator_settings') );
+		add_action( 'admin_init', array( $this, 'register_image_annotator_settings' ) );
 		//Seed added:END
 	}
 
@@ -43,15 +43,14 @@ class WPIA_Admin {
 	 * Settings page display callback.
 	 */
 	function settings_page() {
-		
-		$vanilla_tagger_editor=file_get_contents( __DIR__.'/../css/vanilla-tagger-editor.css');
-		$vanilla_tagger_navigation=file_get_contents( __DIR__.'/../css/vanilla-tagger-navigation.css');
-		$vanilla_tagger_theme=file_get_contents( __DIR__.'/../css/vanilla-tagger.theme.css');
-		$vanilla_tagger_editor_tagdata_tmpl=file_get_contents( __DIR__.'/../js/vanilla-tagger-editor.tagdata.tmpl.js');
-		$vanilla_tagger_editor_webc=file_get_contents( __DIR__.'/../js/vanilla-tagger-editor.webc.js');
-		$vanilla_tagger_navigation_webc=file_get_contents( __DIR__.'/../js/vanilla-tagger-navigation.webc.js');
-		$vanilla_tagger_webc=file_get_contents( __DIR__.'/../js/vanilla-tagger.webc.js');
-		
+
+		$vanilla_tagger_editor = file_get_contents( VANILLA_TAGGER_EDITOR_CSS_FILE );
+		$vanilla_tagger_navigation = file_get_contents( VANILLA_TAGGER_NAVIGATION_CSS_FILE );
+		$vanilla_tagger_theme = file_get_contents( VANILLA_TAGGER_THEME_CSS_FILE );
+		$vanilla_tagger_editor_tagdata_tmpl = file_get_contents( VANILLA_TAGGER_EDITOR_TAGDATA_TMPL_JS_FILE );
+		$vanilla_tagger_editor_webc = file_get_contents( VANILLA_TAGGER_EDITOR_WEBC_JS_FILE );
+		$vanilla_tagger_navigation_webc = file_get_contents( VANILLA_TAGGER_NAVIGATION_WEBC_JS_FILE );
+		$vanilla_tagger_webc = file_get_contents( VANILLA_TAGGER_WEBC_JS_FILE );
 		?>
 		<div class="wrap">
 			<h1>Image annotator settings</h1>
@@ -62,36 +61,36 @@ class WPIA_Admin {
 				<table class="form-table">
 					<tr valign="top">
 						<th scope="row">Vanilla tagger editor (CSS)</th>
-						
-						<td><textarea type="text" name="vanilla_tagger_editor" style="width:100%;height:300px"><?php echo ( get_option( 'vanilla_tagger_editor',$vanilla_tagger_editor ) ); ?></textarea></td>
+
+						<td><textarea type="text" name="vanilla_tagger_editor" style="width:100%;height:300px"><?php echo ( get_option( 'vanilla_tagger_editor', $vanilla_tagger_editor ) ); ?></textarea></td>
 					</tr>
 					<tr valign="top">
 						<th scope="row">Vanilla tagger navigator (CSS)</th>
-						<td><textarea type="text" name="vanilla_tagger_navigation" style="width:100%;height:300px"><?php echo ( get_option( 'vanilla_tagger_navigation',$vanilla_tagger_navigation ) ); ?></textarea></td>
+						<td><textarea type="text" name="vanilla_tagger_navigation" style="width:100%;height:300px"><?php echo ( get_option( 'vanilla_tagger_navigation', $vanilla_tagger_navigation ) ); ?></textarea></td>
 					</tr>
 					<tr valign="top">
 						<th scope="row">Vanilla tagger theme (CSS)</th>
-						<td><textarea type="text" name="vanilla_tagger_theme" style="width:100%;height:300px"><?php echo ( get_option( 'vanilla_tagger_theme',$vanilla_tagger_theme ) ); ?></textarea></td>
+						<td><textarea type="text" name="vanilla_tagger_theme" style="width:100%;height:300px"><?php echo ( get_option( 'vanilla_tagger_theme', $vanilla_tagger_theme ) ); ?></textarea></td>
 					</tr>	
 					<tr valign="top">
 						<th scope="row">Vanilla tagger editor tagdata tmpl (JS)</th>
-						<td><textarea type="text" name="vanilla_tagger_editor_tagdata_tmpl" style="width:100%;height:300px"><?php echo ( get_option( 'vanilla_tagger_editor_tagdata_tmpl',$vanilla_tagger_editor_tagdata_tmpl ) ); ?></textarea></td>
+						<td><textarea type="text" name="vanilla_tagger_editor_tagdata_tmpl" style="width:100%;height:300px"><?php echo ( get_option( 'vanilla_tagger_editor_tagdata_tmpl', $vanilla_tagger_editor_tagdata_tmpl ) ); ?></textarea></td>
 					</tr>						
 
 					<tr valign="top">
 						<th scope="row">Vanilla tagger editor webc (JS)</th>
-						<td><textarea type="text" name="vanilla_tagger_editor_webc" style="width:100%;height:300px"><?php echo ( get_option( 'vanilla_tagger_editor_webc',$vanilla_tagger_editor_webc ) ); ?></textarea></td>
+						<td><textarea type="text" name="vanilla_tagger_editor_webc" style="width:100%;height:300px"><?php echo ( get_option( 'vanilla_tagger_editor_webc', $vanilla_tagger_editor_webc ) ); ?></textarea></td>
 					</tr>						
 					<tr valign="top">
 						<th scope="row">Vanilla tagger navigation webc (JS)</th>
-						<td><textarea type="text" name="vanilla_tagger_navigation_webc" style="width:100%;height:300px"><?php echo ( get_option( 'vanilla_tagger_navigation_webc',$vanilla_tagger_navigation_webc ) ); ?></textarea></td>
+						<td><textarea type="text" name="vanilla_tagger_navigation_webc" style="width:100%;height:300px"><?php echo ( get_option( 'vanilla_tagger_navigation_webc', $vanilla_tagger_navigation_webc ) ); ?></textarea></td>
 					</tr>						
 					<tr valign="top">
 						<th scope="row">Vanilla tagger webc (JS)</th>
-						<td><textarea type="text" name="vanilla_tagger_webc" style="width:100%;height:300px"><?php echo ( get_option( 'vanilla_tagger_webc',$vanilla_tagger_webc ) ); ?></textarea></td>
+						<td><textarea type="text" name="vanilla_tagger_webc" style="width:100%;height:300px"><?php echo ( get_option( 'vanilla_tagger_webc', $vanilla_tagger_webc ) ); ?></textarea></td>
 					</tr>						
 
-					
+
 				</table>
 
 				<?php submit_button(); ?>
@@ -106,6 +105,10 @@ class WPIA_Admin {
 		register_setting( 'image-annotator-settings-group', 'vanilla_tagger_navigation' );
 		register_setting( 'image-annotator-settings-group', 'vanilla_tagger_theme' );
 		register_setting( 'image-annotator-settings-group', 'vanilla_tagger_editor_tagdata_tmpl' );
+
+		register_setting( 'image-annotator-settings-group', 'vanilla_tagger_editor_webc' );
+		register_setting( 'image-annotator-settings-group', 'vanilla_tagger_navigation_webc' );
+		register_setting( 'image-annotator-settings-group', 'vanilla_tagger_webc' );
 	}
 
 	//Seed added:END
@@ -161,21 +164,21 @@ class WPIA_Admin {
 		if ( get_post_type() !== 'annotation' )
 			return;
 
-			wp_enqueue_style('thickbox');
-		
-			wp_enqueue_style('wpia-vtagger-editor-style', plugins_url('../lib/vanilla-tagger/plugins/editor/vanilla-tagger-editor.css', __FILE__));
-			
-			wp_enqueue_script('media-upload');
-			wp_enqueue_script('thickbox');
-			
-			wp_enqueue_script('wpia-vtagger-js', plugins_url('../lib/vanilla-tagger/vanilla-tagger.webc.js', __FILE__));
-	
-			wp_enqueue_script('wpia-vtagger-editor-tmpl-js', plugins_url('../lib/vanilla-tagger/plugins/editor/vanilla-tagger-editor.tagdata.tmpl.js', __FILE__), array('wpia-vtagger-js'));		
-	
-	
-			wp_enqueue_script('wpia-vtagger-editor-js', plugins_url('../lib/vanilla-tagger/plugins/editor/vanilla-tagger-editor.webc.js', __FILE__), array('wpia-vtagger-js','wpia-vtagger-editor-tmpl-js'));
-					
-			wp_enqueue_script('wpia-admin-scripts', plugins_url('../admin/js/script.js', __FILE__), array('media-upload','thickbox','wpia-vtagger-js','wpia-vtagger-editor-tmpl-js','wpia-vtagger-editor-js'));
+		wp_enqueue_style( 'thickbox' );
+
+		wp_enqueue_style( 'wpia-vtagger-editor-style', plugins_url( '../lib/vanilla-tagger/plugins/editor/vanilla-tagger-editor.css', __FILE__ ) );
+
+		wp_enqueue_script( 'media-upload' );
+		wp_enqueue_script( 'thickbox' );
+
+		wp_enqueue_script( 'wpia-vtagger-js', plugins_url( '../lib/vanilla-tagger/vanilla-tagger.webc.js', __FILE__ ) );
+
+		wp_enqueue_script( 'wpia-vtagger-editor-tmpl-js', plugins_url( '../lib/vanilla-tagger/plugins/editor/vanilla-tagger-editor.tagdata.tmpl.js', __FILE__ ), array( 'wpia-vtagger-js' ) );
+
+
+		wp_enqueue_script( 'wpia-vtagger-editor-js', plugins_url( '../lib/vanilla-tagger/plugins/editor/vanilla-tagger-editor.webc.js', __FILE__ ), array( 'wpia-vtagger-js', 'wpia-vtagger-editor-tmpl-js' ) );
+
+		wp_enqueue_script( 'wpia-admin-scripts', plugins_url( '../admin/js/script.js', __FILE__ ), array( 'media-upload', 'thickbox', 'wpia-vtagger-js', 'wpia-vtagger-editor-tmpl-js', 'wpia-vtagger-editor-js' ) );
 	}
 
 	function add_current_json() {

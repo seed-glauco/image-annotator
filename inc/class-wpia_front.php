@@ -75,6 +75,7 @@ class WPIA_Front {
                 $annotation_query->the_post();
                 $image = get_post_meta(get_the_ID(), 'wpia_annotation_image', true);
                 $data = get_post_meta(get_the_ID(), 'wpia_annotation_data', true);
+				/*
                 $original_size = get_post_meta(get_the_ID(), 'wpia_annotation_canvas_size', true);
                 $annotation_data = json_decode($data);
                 $annotation_text = array();
@@ -96,11 +97,26 @@ class WPIA_Front {
                 if($is_mobile) {
                     $data = json_encode($annotation_data);
                 }
-
+*/
                 ob_start();
                 ?>
 
-                <script>
+<script>
+<?=get_option('vanilla_tagger_webc')?>
+</script>	
+				<vanilla-tagger
+					id="wpia-preview-image"			
+					src="<?php echo $image; ?>"
+					placeholder="#wpia-toolbar"
+					data-tags="<?= esc_attr( $data ) ?>"
+					data-theme-text="<?php /*= esc_attr( $data )*/ ?>"
+					>
+					Your browser doesn't currently support this component<br />
+					<a href="https://browsehappy.com/" target="_blank"
+					   >Please , update your browser</a
+					>
+				</vanilla-tagger>			
+                <!--script>
                     wpiaGeneratedImage["<?php echo get_the_ID(); ?>"] = <?php echo $data; ?>;
                 </script>
                 <div class="annotated-image-container">
@@ -115,7 +131,7 @@ class WPIA_Front {
                             <?php endforeach; ?>
                         </ol>
                     </div>
-                </div>
+                </div-->
 
 
 
@@ -137,6 +153,13 @@ class WPIA_Front {
         wp_register_script('wpia-front-imagesloaded', plugins_url('../lib/imagesLoaded/imagesloaded.pkgd.min.js', __FILE__), array('jquery'));
         wp_register_script('wpia-front-script', plugins_url('../front/js/script.js', __FILE__), array('jquery', 'wpia-front-fabric', 'wpia-front-imagesloaded'));
         wp_enqueue_style('wpia-front-style', plugins_url('../front/css/style.css', __FILE__));
+		
+		
+		
+		
+		
+		
+		
     }
 
     public function add_header_variable()
