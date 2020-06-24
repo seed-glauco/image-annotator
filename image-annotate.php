@@ -24,6 +24,7 @@ define( 'VANILLA_TAGGER_WEBC_JS_FILE', __DIR__ . '/lib/vanilla-tagger/vanilla-ta
 //Add file for plugin setup (post type and script registration)
 require('inc/class-wpia_admin.php');
 
+
 //Adds image annotation area
 require('inc/class-wpia_metaboxes.php');
 
