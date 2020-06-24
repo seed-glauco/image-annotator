@@ -199,21 +199,21 @@ class WPIA_Admin {
 
 		wp_enqueue_style( 'thickbox' );
 
-		wp_enqueue_style( 'wpia-vtagger-editor-style', plugins_url( '../lib/vanilla-tagger/plugins/editor/vanilla-tagger-editor.css', __FILE__ ) );
+		//wp_enqueue_style( 'wpia-vtagger-editor-style', plugins_url( '../lib/vanilla-tagger/plugins/editor/vanilla-tagger-editor.css', __FILE__ ) );
 
 		wp_enqueue_style( 'wpia-admin-style', plugins_url( '../admin/css/style.css', __FILE__ ) );
 
 		wp_enqueue_script( 'media-upload' );
 		wp_enqueue_script( 'thickbox' );
-
+/*
 		wp_enqueue_script( 'wpia-vtagger-js', plugins_url( '../lib/vanilla-tagger/vanilla-tagger.webc.js', __FILE__ ) );
 
 		wp_enqueue_script( 'wpia-vtagger-editor-tmpl-js', plugins_url( '../lib/vanilla-tagger/plugins/editor/vanilla-tagger-editor.tagdata.tmpl.js', __FILE__ ), array( 'wpia-vtagger-js' ) );
 
 
 		wp_enqueue_script( 'wpia-vtagger-editor-js', plugins_url( '../lib/vanilla-tagger/plugins/editor/vanilla-tagger-editor.webc.js', __FILE__ ), array( 'wpia-vtagger-js', 'wpia-vtagger-editor-tmpl-js' ) );
-
-		wp_enqueue_script( 'wpia-admin-scripts', plugins_url( '../admin/js/script.js', __FILE__ ), array( 'media-upload', 'thickbox', 'wpia-vtagger-js', 'wpia-vtagger-editor-tmpl-js', 'wpia-vtagger-editor-js' ) );
+*/
+		wp_enqueue_script( 'wpia-admin-scripts', plugins_url( '../admin/js/script.js', __FILE__ ), array( 'media-upload', 'thickbox' ) );
 	}
 
 	function add_current_json() {

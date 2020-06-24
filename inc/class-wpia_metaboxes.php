@@ -2,6 +2,7 @@
 if ( !defined( 'WPINC' ) ):
 	die;
 endif;
+
 class WPIA_Metaboxes {
 
 	public function __construct() {
@@ -18,6 +19,36 @@ class WPIA_Metaboxes {
 	}
 
 	function wpia_display_callback( $post ) {
+
+
+		if ( !empty( get_option( 'vanilla_tagger_editor' ) ) ):
+			$vanilla_tagger_editor = get_option( 'vanilla_tagger_editor' );
+		else:
+			$vanilla_tagger_editor = file_get_contents( VANILLA_TAGGER_EDITOR_CSS_FILE );
+		endif;
+		if ( !empty( get_option( 'vanilla_tagger_webc' ) ) ):
+			$vanilla_tagger_webc = get_option( 'vanilla_tagger_webc' );
+		else:
+			$vanilla_tagger_webc = file_get_contents( VANILLA_TAGGER_WEBC_JS_FILE );
+		endif;		
+		if ( !empty( get_option( 'vanilla_tagger_editor_tagdata_tmpl' ) ) ):
+			$vanilla_tagger_editor_tagdata_tmpl = get_option( 'vanilla_tagger_editor_tagdata_tmpl' );
+		else:
+			$vanilla_tagger_editor_tagdata_tmpl = file_get_contents( VANILLA_TAGGER_EDITOR_TAGDATA_TMPL_JS_FILE );
+		endif;			
+		if ( !empty( get_option( 'vanilla_tagger_editor_webc' ) ) ):
+			$vanilla_tagger_editor_webc = get_option( 'vanilla_tagger_editor_webc' );
+		else:
+			$vanilla_tagger_editor_webc = file_get_contents( VANILLA_TAGGER_EDITOR_WEBC_JS_FILE );
+		endif;				
+
+		if ( !empty( get_option( 'vanilla_tagger_theme' ) ) ):
+			$vanilla_tagger_theme = get_option( 'vanilla_tagger_theme' );
+		else:
+			$vanilla_tagger_theme = file_get_contents( VANILLA_TAGGER_THEME_CSS_FILE );
+		endif;
+		
+
 		$image = get_post_meta( $post->ID, 'wpia_annotation_image', true );
 		$data = get_post_meta( $post->ID, 'wpia_annotation_data', true );
 		$original_size = get_post_meta( $post->ID, 'wpia_annotation_canvas_size', true );
@@ -33,11 +64,18 @@ class WPIA_Metaboxes {
 			<div id="wpia-toolbar">
 			</div>
 			<div id="canvas-area" class="wpia-canvas-area">
+				<style><?= $vanilla_tagger_editor ?></style>
+				<script>
+				<?=$vanilla_tagger_webc?>
+				<?=$vanilla_tagger_editor_tagdata_tmpl?>
+				<?=$vanilla_tagger_editor_webc?>
+				</script>
 				<vanilla-tagger-editor
 					id="wpia-preview-image"			
 					src="<?php echo $image; ?>"
 					placeholder="#wpia-toolbar"
 					data-tags="<?= esc_attr( $data ) ?>"
+					data-theme-text="<?= esc_attr( $vanilla_tagger_theme ) ?>"
 					>
 					Your browser doesn't currently support this component<br />
 					<a href="https://browsehappy.com/" target="_blank"
