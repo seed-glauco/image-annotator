@@ -16,10 +16,11 @@ class WPIA_Front {
 		add_action( 'init', array( $this, 'shortcode_button' ) );
 
 		//Adds annotation JSON to the header so they can be loaded
-		add_action( 'admin_print_scripts', array( $this, 'admin_scripts_styles' ) );
+		//add_action( 'admin_print_scripts', array( $this, 'admin_scripts_styles' ) );
 	}
 
 	//This is a check for mobile that excludes iPads since the image still is relatively large on those
+	/*
 	protected function wpia_is_mobile() {
 		static $is_mobile;
 
@@ -41,7 +42,7 @@ class WPIA_Front {
 
 		return $is_mobile;
 	}
-
+*/
 	// Add shortcode and return output
 	public function shortcode( $atts ) {
 
@@ -195,7 +196,7 @@ class WPIA_Front {
 
 		return $annotations_array;
 	}
-
+/*
 	public function admin_scripts_styles() {
 
 		$annotations_array = $this->get_annotations();
@@ -204,7 +205,7 @@ class WPIA_Front {
 		echo 'var annotations = ' . wp_json_encode( $annotations_array ) . ';';
 		echo "\n</script>";
 	}
-
+*/
 }
 
 new WPIA_Front();
