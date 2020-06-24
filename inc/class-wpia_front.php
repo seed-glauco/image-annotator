@@ -16,33 +16,9 @@ class WPIA_Front {
 		add_action( 'init', array( $this, 'shortcode_button' ) );
 
 		//Adds annotation JSON to the header so they can be loaded
-		//add_action( 'admin_print_scripts', array( $this, 'admin_scripts_styles' ) );
+		add_action( 'admin_print_scripts', array( $this, 'admin_scripts_styles' ) );
 	}
 
-	//This is a check for mobile that excludes iPads since the image still is relatively large on those
-	/*
-	protected function wpia_is_mobile() {
-		static $is_mobile;
-
-		if ( isset( $is_mobile ) )
-			return $is_mobile;
-
-		if ( empty( $_SERVER['HTTP_USER_AGENT'] ) ) {
-			$is_mobile = false;
-		} elseif (
-				strpos( $_SERVER['HTTP_USER_AGENT'], 'Android' ) !== false || strpos( $_SERVER['HTTP_USER_AGENT'], 'Silk/' ) !== false || strpos( $_SERVER['HTTP_USER_AGENT'], 'Kindle' ) !== false || strpos( $_SERVER['HTTP_USER_AGENT'], 'BlackBerry' ) !== false || strpos( $_SERVER['HTTP_USER_AGENT'], 'Opera Mini' ) !== false ) {
-			$is_mobile = true;
-		} elseif ( strpos( $_SERVER['HTTP_USER_AGENT'], 'Mobile' ) !== false && strpos( $_SERVER['HTTP_USER_AGENT'], 'iPad' ) == false ) {
-			$is_mobile = true;
-		} elseif ( strpos( $_SERVER['HTTP_USER_AGENT'], 'iPad' ) !== false ) {
-			$is_mobile = false;
-		} else {
-			$is_mobile = false;
-		}
-
-		return $is_mobile;
-	}
-*/
 	// Add shortcode and return output
 	public function shortcode( $atts ) {
 
@@ -196,7 +172,7 @@ class WPIA_Front {
 
 		return $annotations_array;
 	}
-/*
+
 	public function admin_scripts_styles() {
 
 		$annotations_array = $this->get_annotations();
@@ -205,7 +181,7 @@ class WPIA_Front {
 		echo 'var annotations = ' . wp_json_encode( $annotations_array ) . ';';
 		echo "\n</script>";
 	}
-*/
+
 }
 
 new WPIA_Front();
