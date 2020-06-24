@@ -10,6 +10,9 @@
   GitHub Plugin URI: https://github.com/seed-glauco/image-annotator
  */
 
+if ( !defined( 'WPINC' ) ):
+	die;
+endif;
 
 define( 'VANILLA_TAGGER_EDITOR_CSS_FILE', __DIR__ . '/lib/vanilla-tagger/plugins/editor/vanilla-tagger-editor.css' );
 define( 'VANILLA_TAGGER_NAVIGATION_CSS_FILE', __DIR__ . '/lib/vanilla-tagger/plugins/navigation/vanilla-tagger-navigation.css' );

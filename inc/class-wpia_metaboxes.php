@@ -1,5 +1,7 @@
 <?php
-
+if ( !defined( 'WPINC' ) ):
+	die;
+endif;
 class WPIA_Metaboxes {
 
 	public function __construct() {
