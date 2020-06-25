@@ -8,10 +8,11 @@ class WPIA_Admin {
 	function __construct() {
 		//Registers the post type
 		add_action( 'init', array( $this, 'register_post_type' ) );
+		/*
 		add_action( 'init', array( $this, 'register_taxes_annotation_tag' ) );
 		add_action( 'restrict_manage_posts', array( $this,'filter_post_type_by_taxonomy') );
 		add_filter( 'parse_query', array( $this,'convert_id_to_term_in_query') );
-
+*/
 		//Adds scripts to be used
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_styles_scripts' ) );
 
@@ -187,12 +188,9 @@ class WPIA_Admin {
 
 		register_post_type( 'annotation', $args );
 	}
-
+/*
 	function register_taxes_annotation_tag() {
 
-		/**
-		 * Taxonomy: Annotation tags.
-		 */
 		$labels = [
 			"name" => __( "Annotation tags", "twentytwenty" ),
 			"singular_name" => __( "Annotation tag", "twentytwenty" ),
@@ -247,7 +245,7 @@ class WPIA_Admin {
 			$q_vars[$taxonomy] = $term->slug;
 		}
 	}
-
+*/
 	/**
 	 * Adds scripts and styles.
 	 *
