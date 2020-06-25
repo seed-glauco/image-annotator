@@ -2,11 +2,15 @@
 if ( !defined( 'WPINC' ) ):
 	die;
 endif;
+
 class WPIA_Admin {
 
 	function __construct() {
 		//Registers the post type
 		add_action( 'init', array( $this, 'register_post_type' ) );
+		add_action( 'init', array( $this, 'register_taxes_annotation_tag' ) );
+		add_action( 'restrict_manage_posts', array( $this,'filter_post_type_by_taxonomy') );
+		add_filter( 'parse_query', array( $this,'convert_id_to_term_in_query') );
 
 		//Adds scripts to be used
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_styles_scripts' ) );
@@ -82,8 +86,8 @@ class WPIA_Admin {
 			<h1>Image annotator settings</h1>
 
 			<form method="post" action="options.php">
-		<?php settings_fields( 'image-annotator-settings-group' ); ?>
-		<?php do_settings_sections( 'image-annotator-settings-group' ); ?>
+				<?php settings_fields( 'image-annotator-settings-group' ); ?>
+				<?php do_settings_sections( 'image-annotator-settings-group' ); ?>
 				<table class="form-table">
 					<tr valign="top">
 						<th scope="row">Vanilla tagger editor (CSS)</th>
@@ -119,7 +123,7 @@ class WPIA_Admin {
 
 				</table>
 
-		<?php submit_button(); ?>
+				<?php submit_button(); ?>
 
 			</form>
 		</div>
@@ -184,6 +188,66 @@ class WPIA_Admin {
 		register_post_type( 'annotation', $args );
 	}
 
+	function register_taxes_annotation_tag() {
+
+		/**
+		 * Taxonomy: Annotation tags.
+		 */
+		$labels = [
+			"name" => __( "Annotation tags", "twentytwenty" ),
+			"singular_name" => __( "Annotation tag", "twentytwenty" ),
+		];
+
+		$args = [
+			"label" => __( "Annotation tags", "twentytwenty" ),
+			"labels" => $labels,
+			"public" => false,
+			"publicly_queryable" => false,
+			"hierarchical" => false,
+			"show_ui" => true,
+			"show_in_menu" => true,
+			"show_in_nav_menus" => true,
+			"query_var" => true,
+			"rewrite" => [ 'slug' => 'annotation_tag', 'with_front' => true, ],
+			"show_admin_column" => true,
+			"show_in_rest" => true,
+			"rest_base" => "annotation_tag",
+			"rest_controller_class" => "WP_REST_Terms_Controller",
+			"show_in_quick_edit" => true,
+		];
+		register_taxonomy( "annotation_tag", [ "annotation" ], $args );
+	}
+
+	function filter_post_type_by_taxonomy() {
+		global $typenow;
+		$post_type = 'annotation'; // change to your post type
+		$taxonomy = 'annotation_tag'; // change to your taxonomy
+		if ( $typenow == $post_type ) {
+			$selected = isset( $_GET[$taxonomy] ) ? $_GET[$taxonomy] : '';
+			$info_taxonomy = get_taxonomy( $taxonomy );
+			wp_dropdown_categories( array(
+				'show_option_all' => sprintf( __( 'Show all %s', 'textdomain' ), $info_taxonomy->label ),
+				'taxonomy' => $taxonomy,
+				'name' => $taxonomy,
+				'orderby' => 'name',
+				'selected' => $selected,
+				'show_count' => true,
+				'hide_empty' => true,
+			) );
+		};
+	}
+
+	function convert_id_to_term_in_query( $query ) {
+		global $pagenow;
+		$post_type = 'annotation'; // change to your post type
+		$taxonomy = 'annotation_tag'; // change to your taxonomy
+		$q_vars = &$query->query_vars;
+		if ( $pagenow == 'edit.php' && isset( $q_vars['post_type'] ) && $q_vars['post_type'] == $post_type && isset( $q_vars[$taxonomy] ) && is_numeric( $q_vars[$taxonomy] ) && $q_vars[$taxonomy] != 0 ) {
+			$term = get_term_by( 'id', $q_vars[$taxonomy], $taxonomy );
+			$q_vars[$taxonomy] = $term->slug;
+		}
+	}
+
 	/**
 	 * Adds scripts and styles.
 	 *
@@ -205,14 +269,14 @@ class WPIA_Admin {
 
 		wp_enqueue_script( 'media-upload' );
 		wp_enqueue_script( 'thickbox' );
-/*
-		wp_enqueue_script( 'wpia-vtagger-js', plugins_url( '../lib/vanilla-tagger/vanilla-tagger.webc.js', __FILE__ ) );
+		/*
+		  wp_enqueue_script( 'wpia-vtagger-js', plugins_url( '../lib/vanilla-tagger/vanilla-tagger.webc.js', __FILE__ ) );
 
-		wp_enqueue_script( 'wpia-vtagger-editor-tmpl-js', plugins_url( '../lib/vanilla-tagger/plugins/editor/vanilla-tagger-editor.tagdata.tmpl.js', __FILE__ ), array( 'wpia-vtagger-js' ) );
+		  wp_enqueue_script( 'wpia-vtagger-editor-tmpl-js', plugins_url( '../lib/vanilla-tagger/plugins/editor/vanilla-tagger-editor.tagdata.tmpl.js', __FILE__ ), array( 'wpia-vtagger-js' ) );
 
 
-		wp_enqueue_script( 'wpia-vtagger-editor-js', plugins_url( '../lib/vanilla-tagger/plugins/editor/vanilla-tagger-editor.webc.js', __FILE__ ), array( 'wpia-vtagger-js', 'wpia-vtagger-editor-tmpl-js' ) );
-*/
+		  wp_enqueue_script( 'wpia-vtagger-editor-js', plugins_url( '../lib/vanilla-tagger/plugins/editor/vanilla-tagger-editor.webc.js', __FILE__ ), array( 'wpia-vtagger-js', 'wpia-vtagger-editor-tmpl-js' ) );
+		 */
 		wp_enqueue_script( 'wpia-admin-scripts', plugins_url( '../admin/js/script.js', __FILE__ ), array( 'media-upload', 'thickbox' ) );
 	}
 
