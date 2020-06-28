@@ -96,7 +96,7 @@ class WPIA_Front {
 					<vanilla-tagger-navigation
 						id="v-tagger"			
 						src="<?= $image ?>"
-						placeholder="<?= $atts['placeholder'] ?>"
+						placeholder="#<?= $atts['placeholder'] ?>"
 						data-tags="<?= esc_attr( $data ) ?>"
 						data-theme-text="<?= esc_attr( $vanilla_tagger_theme ) ?>"
 						>
