@@ -17,7 +17,7 @@ body {
 }
 
 .vanilla-tagger-toolbar {
-  padding: 15px 0;
+  padding: 0;
   margin: 0;
 }
 
@@ -155,10 +155,6 @@ body {
   clear: both;
 }
 
-.vanilla-tagger-dialog button {
-  cursor: pointer;
-}
-
 .vanilla-tagger-dialog .btn-remove {
   float: right;
   border: solid 1px rgba(200, 0, 0, 1);
@@ -185,16 +181,6 @@ body {
 
 .vanilla-tagger-dialog .btn-cancel {
   float: right;
-}
-
-.vanilla-tagger-dialog main form fieldset {
-  border: solid 1px #ccc;
-  padding: 15px;
-}
-
-.vanilla-tagger-dialog main form fieldset legend {
-  font-weight: bold;
-  padding: 0 5px;
 }
 
 .vanilla-tagger-dialog main form ul {
@@ -238,8 +224,4 @@ body {
 
 .vanilla-tagger-dialog input:invalid {
   border: 2px solid red;
-}
-
-#btn-export {
-  display: none;
 }
