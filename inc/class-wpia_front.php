@@ -51,7 +51,9 @@ class WPIA_Front {
 		$atts = shortcode_atts(
 				array(
 					'id' => '',
-					'navigator' => '0',
+					'navigator' => '0',			
+					'title' => '',
+					'position' => '',					
 					'placeholder' => ''
 				),
 				$atts,
@@ -84,7 +86,7 @@ class WPIA_Front {
 
 				ob_start();
 
-				if ( isset( $atts['navigator'] ) && !empty( $atts['navigator'] ) && $atts['navigator'] == '1' && isset( $atts['placeholder'] ) && !empty( $atts['placeholder'] ) ):
+				if ( isset( $atts['navigator'] ) && !empty( $atts['navigator'] ) && $atts['navigator'] == '1' && isset( $atts['placeholder'] ) && !empty( $atts['placeholder'])  ):
 					?>
 					<style>
 					<?= $vanilla_tagger_navigation ?>
@@ -93,16 +95,22 @@ class WPIA_Front {
 					<?= $vanilla_tagger_webc ?>
 					<?= $vanilla_tagger_navigation_webc ?>
 					</script>	
-					<vanilla-tagger-navigation
-						id="v-tagger"			
-						src="<?= $image ?>"
-						placeholder="#<?= $atts['placeholder'] ?>"
-						data-tags="<?= esc_attr( $data ) ?>"
-						data-theme-text="<?= esc_attr( $vanilla_tagger_theme ) ?>"
-						>
-						Your browser doesn't currently support this component<br />
-						<a href="https://browsehappy.com/" target="_blank">Please , update your browser</a>
-					</vanilla-tagger-navigation>			
+				    <section class="vtagger-wrapper"><section class="vtagger-imgcontainer">
+						<vanilla-tagger-navigation
+							id="v-tagger"			
+							src="<?= $image ?>"
+							placeholder="#<?= $atts['placeholder'] ?>"
+							data-title="<?= esc_attr($atts['title']) ?>"						
+							data-tags="<?= esc_attr( $data ) ?>"
+							data-theme-text="<?= esc_attr( $vanilla_tagger_theme ) ?>"
+							>
+							Your browser doesn't currently support this component<br />
+							<a href="https://browsehappy.com/" target="_blank">Please , update your browser</a>
+						</vanilla-tagger-navigation>	
+				    </section>
+					<aside class="vtagger-navcontainer <?= $atts['position'] ?>" id="<?= $atts['placeholder'] ?>"
+					  ></aside>
+					</section>
 					<?php
 				else:
 					?>
@@ -112,7 +120,6 @@ class WPIA_Front {
 					<vanilla-tagger
 						id="wpia-preview-image"			
 						src="<?= $image ?>"
-						placeholder="#wpia-toolbar"
 						data-tags="<?= esc_attr( $data ) ?>"
 						data-theme-text="<?= esc_attr( $vanilla_tagger_theme ) ?>"
 						>
