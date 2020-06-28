@@ -3,7 +3,7 @@
 /*
   Plugin Name: Image Annotator
   Description: Adds the ability to create annotated images and then edit the annotations later.
-  Version: 1.3.9
+  Version: 1.4.0
   Author: Moe Loubani
   Author URI: http://www.moeloubani.com
   License: GPLv3
