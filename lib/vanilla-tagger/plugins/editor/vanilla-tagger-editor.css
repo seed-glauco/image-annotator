@@ -125,6 +125,11 @@ body {
   box-sizing: content-box;
 }
 
+.vanilla-tagger-dialog fieldset {
+  border: solid 1px rgba(0, 0, 0, 1);
+  padding: 10px;
+}
+
 .vanilla-tagger-dialog header {
   border-bottom: solid 1px rgba(0, 0, 0, 0.1);
   padding: 10px;
@@ -135,11 +140,6 @@ body {
   padding: 5px 10px;
   overflow-y: auto;
   overflow-x: hidden;
-}
-
-.vanilla-tagger-dialog pre {
-  max-width: 100%;
-  overflow: auto;
 }
 
 .vanilla-tagger-dialog footer {
@@ -209,19 +209,44 @@ body {
   width: 120px;
   padding-right: 10px;
   line-height: 25px;
-  vertical-align: middle;
+  vertical-align: top;
 }
 
 .vanilla-tagger-dialog main form li label + [type="text"],
 .vanilla-tagger-dialog main form li label + [type="url"],
+.vanilla-tagger-dialog main form li label + textarea,
 .vanilla-tagger-dialog main form li label + select {
   display: block;
   width: calc(100% - 145px);
+  min-width: calc(100% - 145px);
   float: right;
   box-sizing: border-box;
   height: 25px;
 }
 
-.vanilla-tagger-dialog input:invalid {
+.vanilla-tagger-dialog .openFileDialog {
+  padding-right: 30px;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDEwMDAiIHhtbG5zOnY9Imh0dHBzOi8vdmVjdGEuaW8vbmFubyI+PHBhdGggZD0iTTM5LjQ4IDEwMy42Yy0xMS42OCA1LjM2LTIwLjg2IDE0LjM2LTI1LjQ2IDI0Ljg4TDEwIDEzOC4wNWwuMzggMzY0LjI1IDQuMDIgMzcxLjE0YzQuOCA5LjU3IDE0LjE3IDE4Ljc2IDIzLjM1IDIyLjk3IDcuMjcgMy40NSAyMy41NCAzLjY0IDM3OS41NiAzLjY0bDM3OC44LTIuODdjMTAuNTMtNC40IDE5LjMzLTExLjg3IDIzLjM1LTE5LjdDODI1Ljc3IDg2NC44MiA5OTAgNDEyLjcyIDk5MCA0MDcuNzRjMC05LjItNS43NC0yMy45My0xMi42My0zMS43Ny0xMS40OC0xMy42LTE0Ljc0LTE0LjM2LTUxLjg3LTE1LjNsLTMyLjkyLS43Ny0xLjE1LTExMS42LTUuMTctOC44Yy01LjkzLTEwLjE0LTE0Ljc0LTE4LjM4LTIzLjkzLTIyLjItNS4xNy0yLjEtNDMuODMtMi41LTIxMi40Ni0yLjVINDQzLjU0bC0zOS4wNS01NC41NWMtMjEuNDQtMzAuMDUtNDAuNzctNTUuOS00Mi44Ny01Ny40Mi0zLjY0LTIuNS0yNS4wNy0yLjg3LTE1OS4yNS0yLjg3LTE0Ni42Mi0uMDEtMTU1LjQzLjE4LTE2Mi45IDMuNjN6bTM0NC45IDg0LjZjMjUuMjcgMzUuNiA0MS4zNCA1Ni4yNyA0NC4yMiA1Ny40MiAyLjY4Ljk2IDkyLjA3IDEuNzIgMjE0LjU3IDEuNzJsMjEyLjg0IDEuOWMyLjUgMS41MyAyLjg3IDEwLjM0IDMuNDUgNTYuNDZsLjU3IDU0LjU1LTY1MS45Mi45NS04LjA0IDQuMmMtMTYuODQgOS0xNS4zIDUuNTUtODUuOTQgMTk4LjY4TDQ1LjQgNzUwLjc0Yy0yLjMgNS45My0yLjY4LTMxLTIuNjgtMzAyLjhsMi44Ny0zMTIuMzdjMi42OC0yLjY4IDE4Ljk1LTMuMDYgMTUxLjAyLTMuMDZoMTQ3Ljk2bDM5LjggNTUuN3ptNTcxLjczIDIxMi4yN2MxLjUzIDQuMDItMTMuNCA0Ni4xMy04Mi4zIDIzNS40M0w3ODkuNiA4NjYuNTRsLTM2OS4yMi41N2MtMjAzLjA4LjItMzcxLjE0IDAtMzczLjQzLS41Ny0yLjg3LS41Ny00LjQtMi41LTQuNC01LjE3IDAtMi4zIDI4LjE0LTgwLjc3IDYyLjQtMTc0LjU2bDEwNi42LTI5Mi4xIDc0My4wNC45NSAxLjUzIDQuOHoiLz48L3N2Zz4=");
+  background-size: 20px 20px;
+  background-position: calc(100% - 3px) center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.vanilla-tagger-dialog main form li label + textarea {
+  height: 50px;
+}
+
+.vanilla-tagger-dialog input:invalid,
+.vanilla-tagger-dialog textarea:invalid {
   border: 2px solid red;
+}
+
+body.WPMLOpen dialog {
+  display: none;
+  pointer-events: none;
+}
+
+#btn-export {
+  display: none;
 }
