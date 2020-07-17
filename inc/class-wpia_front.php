@@ -2,6 +2,7 @@
 if ( !defined( 'WPINC' ) ):
 	die;
 endif;
+
 class WPIA_Front {
 
 	public function __construct() {
@@ -13,10 +14,25 @@ class WPIA_Front {
 		//Adds the styles and scripts to run things and make them look good
 		//add_action( 'wp_enqueue_scripts', array( $this, 'add_scripts_styles' ) );
 		//Adds the shortcode button in the TinyMCE editor
-		add_action( 'init', array( $this, 'shortcode_button' ) );
+		//add_action( 'init', array( $this, 'shortcode_button' ) );
 
 		//Adds annotation JSON to the header so they can be loaded
 		add_action( 'admin_print_scripts', array( $this, 'admin_scripts_styles' ) );
+		add_filter( 'the_content', array( $this, 'the_content' ) );
+	}
+
+	function the_content( $content ) {
+
+		if ( isset( $GLOBALS['post'] ) && get_option( "vanilla-tagger-settings-pt-" . $GLOBALS['post']->post_type ) == 'yes' && !is_admin() && is_singular() ) :
+			$wpia_navigatorStatus = get_post_meta( $GLOBALS['post']->ID, 'wpia_navigatorStatus', true );
+			$wpia_navigatorPosition = get_post_meta( $GLOBALS['post']->ID, 'wpia_navigatorPosition', true );
+			$wpia_navigatorTitle = get_post_meta( $GLOBALS['post']->ID, 'wpia_navigatorTitle', true );
+			$sc = '[wpia_image id="' . $GLOBALS['post']->ID . '" navigator="' . $wpia_navigatorStatus . '" placeholder="navigator-placeholder-' . $GLOBALS['post']->ID . '" title="' . esc_attr( $wpia_navigatorTitle ) . '" position="' . $wpia_navigatorPosition . ']';
+
+			$content = $content . do_shortcode( $sc );
+
+		endif;
+		return $content;
 	}
 
 	// Add shortcode and return output
@@ -51,9 +67,9 @@ class WPIA_Front {
 		$atts = shortcode_atts(
 				array(
 					'id' => '',
-					'navigator' => '0',			
+					'navigator' => '0',
 					'title' => '',
-					'position' => '',					
+					'position' => '',
 					'placeholder' => ''
 				),
 				$atts,
@@ -62,7 +78,7 @@ class WPIA_Front {
 
 		//Query args to get annotated image
 		$args = array(
-			'post_type' => 'annotation',
+			/* 'post_type' => 'annotation', */
 			'posts_per_page' => 1,
 			'p' => $atts['id']
 		);
@@ -86,7 +102,7 @@ class WPIA_Front {
 
 				ob_start();
 
-				if ( isset( $atts['navigator'] ) && !empty( $atts['navigator'] ) && $atts['navigator'] == '1' && isset( $atts['placeholder'] ) && !empty( $atts['placeholder'])  ):
+				if ( isset( $atts['navigator'] ) && !empty( $atts['navigator'] ) && $atts['navigator'] == '1' && isset( $atts['placeholder'] ) && !empty( $atts['placeholder'] ) ):
 					?>
 					<style>
 					<?= $vanilla_tagger_navigation ?>
@@ -95,21 +111,21 @@ class WPIA_Front {
 					<?= $vanilla_tagger_webc ?>
 					<?= $vanilla_tagger_navigation_webc ?>
 					</script>	
-				    <section class="vtagger-wrapper"><section class="vtagger-imgcontainer">
-						<vanilla-tagger-navigation
-							id="v-tagger"			
-							src="<?= $image ?>"
-							placeholder="#<?= $atts['placeholder'] ?>"
-							data-title="<?= esc_attr($atts['title']) ?>"						
-							data-tags="<?= esc_attr( $data ) ?>"
-							data-theme-text="<?= esc_attr( $vanilla_tagger_theme ) ?>"
-							>
-							Your browser doesn't currently support this component<br />
-							<a href="https://browsehappy.com/" target="_blank">Please , update your browser</a>
-						</vanilla-tagger-navigation>	
-				    </section>
-					<aside class="vtagger-navcontainer <?= $atts['position'] ?>" id="<?= $atts['placeholder'] ?>"
-					  ></aside>
+					<section class="vtagger-wrapper"><section class="vtagger-imgcontainer">
+							<vanilla-tagger-navigation
+								id="v-tagger"			
+								src="<?= $image ?>"
+								placeholder="#<?= $atts['placeholder'] ?>"
+								data-title="<?= esc_attr( $atts['title'] ) ?>"						
+								data-tags="<?= esc_attr( $data ) ?>"
+								data-theme-text="<?= esc_attr( $vanilla_tagger_theme ) ?>"
+								>
+								Your browser doesn't currently support this component<br />
+								<a href="https://browsehappy.com/" target="_blank">Please , update your browser</a>
+							</vanilla-tagger-navigation>	
+						</section>
+						<aside class="vtagger-navcontainer <?= $atts['position'] ?>" id="<?= $atts['placeholder'] ?>"
+							   ></aside>
 					</section>
 					<?php
 				else:

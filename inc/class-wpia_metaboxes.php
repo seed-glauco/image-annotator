@@ -11,10 +11,22 @@ class WPIA_Metaboxes {
 	}
 
 	function wpia_register_edit_area() {
+		
+		
+								$pts=array();
+								$pts[]='none';
+									foreach ( get_post_types( array( 'public' => true, 'show_in_nav_menus' => true ), 'names' ) as $pt ) {
+	
+								if(get_option( "vanilla-tagger-settings-pt-" . $pt )=='yes'):
+									$pts[]=$pt;
+								endif;
+							}
+		
+		
 		add_meta_box( 'wpia-meta',
 				__( 'Image Annotation', 'image-annotator' ),
 				array( $this, 'wpia_display_callback' ),
-				'annotation'
+				$pts
 		);
 	}
 
@@ -52,6 +64,9 @@ class WPIA_Metaboxes {
 		$image = get_post_meta( $post->ID, 'wpia_annotation_image', true );
 		$data = get_post_meta( $post->ID, 'wpia_annotation_data', true );
 		$original_size = get_post_meta( $post->ID, 'wpia_annotation_canvas_size', true );
+		$wpia_navigatorStatus = get_post_meta( $post->ID, 'wpia_navigatorStatus', true );
+		$wpia_navigatorPosition = get_post_meta( $post->ID, 'wpia_navigatorPosition', true );
+		$wpia_navigatorTitle = get_post_meta( $post->ID, 'wpia_navigatorTitle', true );
 		?>
 		<div id="upload-area">
 			<p>Image to annotate.</p>
@@ -84,6 +99,39 @@ class WPIA_Metaboxes {
 				</vanilla-tagger-editor>						              
 			</div>
 		</div>
+<div>
+	<table>
+		<tr>
+			<th>
+				Navigator:
+			</th>
+			<td>
+				<select name="wpia_navigatorStatus" id="wpia_navigatorStatus">
+					<option value="1" <?=(($wpia_navigatorStatus==='1')?('selected'):(''))?>>Yes</option>
+					<option value="0" <?=(($wpia_navigatorStatus==='0')?('selected'):(''))?>>No</option>
+				</select>
+				
+			</td>
+			<th>
+				Nav. position:
+			</th>
+			<td>
+				<select name="wpia_navigatorPosition" id="wpia_navigatorPosition">
+					<option value="vt-inner" <?=(($wpia_navigatorPosition==='vt-inner')?('selected'):(''))?>>Inner</option>
+					<option value="" <?=(($wpia_navigatorPosition==='')?('selected'):(''))?>>Outer</option>
+				</select>
+				
+			</td>	
+			<th>
+				Title:
+			</th>
+			<td>
+				<input type="text" name="wpia_navigatorTitle" id="wpia_navigatorTitle" value="<?=esc_attr( $wpia_navigatorTitle )?>">
+				
+			</td>			
+		</tr>
+	</table>
+</div>
 		<div id="raw-code">
 			<p>Raw JSON for annotations</p>
 			<textarea type="text" name="image_annotation" id="image_annotation_json"><?php echo $data; ?></textarea>
@@ -131,6 +179,12 @@ class WPIA_Metaboxes {
 		update_post_meta( $post_id, 'wpia_annotation_image', $_POST['upload_image'] );
 		update_post_meta( $post_id, 'wpia_annotation_data', $_POST['image_annotation'] );
 		update_post_meta( $post_id, 'wpia_annotation_canvas_size', $_POST['original_size'] );
+
+		update_post_meta( $post_id, 'wpia_navigatorStatus', $_POST['wpia_navigatorStatus'] );
+		update_post_meta( $post_id, 'wpia_navigatorPosition', $_POST['wpia_navigatorPosition'] );
+		update_post_meta( $post_id, 'wpia_navigatorTitle', $_POST['wpia_navigatorTitle'] );
+		
+		
 	}
 
 }
