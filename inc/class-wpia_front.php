@@ -24,10 +24,11 @@ class WPIA_Front {
 	function the_content( $content ) {
 
 		if ( isset( $GLOBALS['post'] ) && get_option( "vanilla-tagger-settings-pt-" . $GLOBALS['post']->post_type ) == 'yes' && !is_admin() && is_singular() ) :
+
 			$wpia_navigatorStatus = get_post_meta( $GLOBALS['post']->ID, 'wpia_navigatorStatus', true );
 			$wpia_navigatorPosition = get_post_meta( $GLOBALS['post']->ID, 'wpia_navigatorPosition', true );
 			$wpia_navigatorTitle = get_post_meta( $GLOBALS['post']->ID, 'wpia_navigatorTitle', true );
-			$sc = '[wpia_image id="' . $GLOBALS['post']->ID . '" navigator="' . $wpia_navigatorStatus . '" placeholder="navigator-placeholder-' . $GLOBALS['post']->ID . '" title="' . esc_attr( $wpia_navigatorTitle ) . '" position="' . $wpia_navigatorPosition . ']';
+			$sc = '[wpia_image id="' . $GLOBALS['post']->ID . '" navigator="' . $wpia_navigatorStatus . '" placeholder="navigator-placeholder-' . $GLOBALS['post']->ID . '" title="' . esc_attr( $wpia_navigatorTitle ) . '" position="' . $wpia_navigatorPosition . '"]';
 
 			$content = $content . do_shortcode( $sc );
 
@@ -78,13 +79,12 @@ class WPIA_Front {
 
 		//Query args to get annotated image
 		$args = array(
-			/* 'post_type' => 'annotation', */
+			'post_type' => 'any', 
 			'posts_per_page' => 1,
 			'p' => $atts['id']
 		);
 
 		$annotation_query = new WP_Query( $args );
-
 
 
 		if ( $annotation_query->have_posts() ) {
