@@ -26,11 +26,30 @@ class WPIA_Admin {
 
 		//Adds revision support for the post type's meta keys
 		add_filter( 'wp_post_revision_meta_keys', array( $this, 'add_meta_keys_to_revision' ) );
+		add_filter( 'image_send_to_editor', array( &$this, 'image_to_editor' ), 1, 8 );
 
 		//Seed added:BEGIN
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'admin_init', array( $this, 'register_image_annotator_settings' ) );
 		//Seed added:END
+	}
+
+	public function image_to_editor( $html, $id, $caption, $title, $align, $url, $size, $alt ) {
+		$dom = new DOMDocument();
+		@$dom->loadHTML( $html );
+
+		$x = new DOMXPath( $dom );
+		foreach ( $x->query( "//img" ) as $node ) {
+			$node->setAttribute( "data-id", $id );
+		}
+
+		if ( $dom->getElementsByTagName( "a" )->length == 0 ) {
+			$newHtml = $dom->saveXML( $dom->getElementsByTagName( 'img' )->item( 0 ) );
+		} else {
+			$newHtml = $dom->saveXML( $dom->getElementsByTagName( 'a' )->item( 0 ) );
+		}
+
+		return $newHtml;
 	}
 
 	//Seed added:BEGIN

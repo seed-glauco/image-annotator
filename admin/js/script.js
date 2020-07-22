@@ -1,58 +1,61 @@
 jQuery(document).ready(function () {
-  let $tagger = jQuery("#wpia-preview-image");
+    let $tagger = jQuery("#wpia-preview-image");
 
-  jQuery("#upload_image_button").click(function () {
-    document.querySelector("body").classList.add("WPMLOpen");
-    tb_show("", "media-upload.php?type=image&amp;TB_iframe=true");
-    return false;
-  });
+    jQuery("#upload_image_button").click(function () {
+        document.querySelector("body").classList.add("WPMLOpen");
+        tb_show("", "media-upload.php?type=image&amp;TB_iframe=true");
+        return false;
+    });
 
-  $tagger.on("VanillaTagger:tagsLoaded", function (e) {
-    jQuery("#image_annotation_json").text(
-      JSON.stringify($tagger[0].publishedTags)
-    );
-    //jQuery("#image_annotation_json").text(JSON.stringify(e.detail));
-  });
+    $tagger.on("VanillaTagger:tagsLoaded", function (e) {
+        jQuery("#image_annotation_json").text(
+                JSON.stringify($tagger[0].publishedTags)
+                );
+        //jQuery("#image_annotation_json").text(JSON.stringify(e.detail));
+    });
 
-  var original_tb_remove = window.tb_remove;
+    var original_tb_remove = window.tb_remove;
 
-  window.tb_remove = function () {
-    document.querySelector("body").classList.remove("WPMLOpen");
+    window.tb_remove = function () {
+        document.querySelector("body").classList.remove("WPMLOpen");
 
-    var dialog = document.getElementById("vt-dialogForm");
-    if (dialog && dialog.open) {
-      let field = dialog.querySelector(".updating");
-      if (field) {
-        field.classList.remove("updating");
-      }
-    }
-    original_tb_remove();
-  };
+        var dialog = document.getElementById("vt-dialogForm");
+        if (dialog && dialog.open) {
+            let field = dialog.querySelector(".updating");
+            if (field) {
+                field.classList.remove("updating");
+            }
+        }
+        original_tb_remove();
+    };
 
-  window.send_to_editor = function (html) {
-    var dialog = document.getElementById("vt-dialogForm");
+    window.send_to_editor = function (html) {
+        // /wp-json/wp/v2/media/80
+        //console.log(html);
+        var dialog = document.getElementById("vt-dialogForm");
 
-    var imgurl,
-      srcCheck = jQuery(html).attr("src");
-    if (srcCheck && typeof srcCheck !== "undefined") {
-      imgurl = srcCheck;
-    } else {
-      imgurl = jQuery("img", html).attr("src");
-    }
+        var imgurl, imgid = -1, srcCheck = jQuery(html).attr("src");
+        if (srcCheck && typeof srcCheck !== "undefined") {
+            imgurl = srcCheck;
+            imgid = -1;
+        } else {
+            imgid = jQuery("img", html).data('id');
+            imgurl = jQuery("img", html).attr("src");
+        }
 
-    if (dialog && dialog.open) {
-      let field = dialog.querySelector(".updating");
-      if (field) {
-        field.value = imgurl;
-        field.classList.remove("updating");
-      }
-    } else {
-      jQuery("#upload_image").val(imgurl);
-      $tagger.attr("src", imgurl);
-    }
+        if (dialog && dialog.open) {
+            let field = dialog.querySelector(".updating");
+            if (field) {
+                field.value = imgurl;
+                field.classList.remove("updating");
+            }
+        } else {
+            jQuery("#upload_image").val(imgurl);
+            $tagger.attr("src", imgurl);
+        }
 
-    //console.log(imgurl);
-    document.querySelector("body").classList.remove("WPMLOpen");
-    original_tb_remove();
-  };
+        //console.log(imgurl);
+        document.querySelector("body").classList.remove("WPMLOpen");
+        original_tb_remove();
+    };
 });
