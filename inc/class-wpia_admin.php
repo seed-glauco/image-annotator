@@ -333,6 +333,9 @@ class WPIA_Admin {
 		  wp_enqueue_script( 'wpia-vtagger-editor-js', plugins_url( '../lib/vanilla-tagger/plugins/editor/vanilla-tagger-editor.webc.js', __FILE__ ), array( 'wpia-vtagger-js', 'wpia-vtagger-editor-tmpl-js' ) );
 		 */
 		wp_enqueue_script( 'wpia-admin-scripts', plugins_url( '../admin/js/script.js', __FILE__ ), array( 'media-upload', 'thickbox' ) );
+		
+		
+		wp_localize_script('wpia-admin-scripts', 'WPURLS', array( 'siteurl' => get_option('siteurl') ));
 	}
 
 	function add_current_json() {

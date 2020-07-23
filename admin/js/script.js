@@ -14,7 +14,8 @@ jQuery(document).ready(function () {
         //jQuery("#image_annotation_json").text(JSON.stringify(e.detail));
     });
 
-    var original_tb_remove = window.tb_remove;
+    var original_tb_remove = window.tb_remove,
+		original_send_to_editor = window.send_to_editor;
 
     window.tb_remove = function () {
         document.querySelector("body").classList.remove("WPMLOpen");
@@ -29,33 +30,53 @@ jQuery(document).ready(function () {
         original_tb_remove();
     };
 
-    window.send_to_editor = function (html) {
-        // /wp-json/wp/v2/media/80
-        //console.log(html);
-        var dialog = document.getElementById("vt-dialogForm");
+    window.send_to_editor = function (html) { 
 
-        var imgurl, imgid = -1, srcCheck = jQuery(html).attr("src");
-        if (srcCheck && typeof srcCheck !== "undefined") {
-            imgurl = srcCheck;
-            imgid = -1;
-        } else {
-            imgid = jQuery("img", html).data('id');
-            imgurl = jQuery("img", html).attr("src");
-        }
+        var dialog = document.getElementById("vt-dialogForm"),
+			$upload_imgTagger = jQuery("#upload_image");
 
-        if (dialog && dialog.open) {
-            let field = dialog.querySelector(".updating");
-            if (field) {
-                field.value = imgurl;
-                field.classList.remove("updating");
-            }
-        } else {
-            jQuery("#upload_image").val(imgurl);
-            $tagger.attr("src", imgurl);
-        }
+        if (dialog || $upload_imgTagger.length>0)  {
+			var imgurl, 
+				imgid = jQuery(html).data("id"), 
+				srcCheck = jQuery(html).attr("src");
+			
+			if (srcCheck && typeof srcCheck !== "undefined") {
+				imgurl = srcCheck;
+			} else {
+				imgurl = jQuery("img", html).attr("src");
+			}
 
-        //console.log(imgurl);
-        document.querySelector("body").classList.remove("WPMLOpen");
-        original_tb_remove();
+			if (dialog && dialog.open) {
+				
+				var req = jQuery.getJSON(  WPURLS.siteurl + "/wp-json/wp/v2/media/" + imgid )
+				  .done(function(data) {
+					jQuery(dialog).find("[data-wpvalue]").each(function(){
+						var selector = this.dataset.wpvalue,
+							WPValue = data;
+						
+							var selectors = selector.split(".");
+							while(selectors.length && (WPValue = WPValue[selectors.shift()]));
+							value = WPValue;
+						
+							this.value = value;
+							this.classList.remove("updating");
+					}) 
+				  })
+				  .fail(function() {
+					console.log( "error" );
+				  });				
+				  
+				
+			} else {
+				$upload_imgTagger.val(imgurl);
+				$tagger.attr("src", imgurl);
+			}
+
+			document.querySelector("body").classList.remove("WPMLOpen");
+			original_tb_remove();
+			
+		} else {
+			original_send_to_editor();
+		}
     };
 });
