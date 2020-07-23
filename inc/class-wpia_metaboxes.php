@@ -24,7 +24,7 @@ class WPIA_Metaboxes {
 		
 		
 		add_meta_box( 'wpia-meta',
-				__( 'Image Annotation', 'image-annotator' ),
+				__( 'Immagine annotata', 'image-annotator' ),
 				array( $this, 'wpia_display_callback' ),
 				$pts
 		);
@@ -69,10 +69,10 @@ class WPIA_Metaboxes {
 		$wpia_navigatorTitle = get_post_meta( $post->ID, 'wpia_navigatorTitle', true );
 		?>
 		<div id="upload-area">
-			<p>Image to annotate.</p>
+			<p>Immagine da annotare.</p>
 			<div class="upload-fields">
 				<input id="upload_image" type="text" size="36" name="upload_image" value="<?php echo $image; ?>" />
-				<input id="upload_image_button" type="button" value="<?php _e( 'Choose image', 'image-annotator' ); ?>" />
+				<input id="upload_image_button" type="button" value="<?php _e( 'Scegli il file', 'image-annotator' ); ?>" />
 			</div>
 		</div>
 		<div id="work-area">
@@ -103,27 +103,27 @@ class WPIA_Metaboxes {
 	<table>
 		<tr>
 			<th>
-				Navigator:
+				Navigatore:
 			</th>
 			<td>
 				<select name="wpia_navigatorStatus" id="wpia_navigatorStatus">
-					<option value="1" <?=(($wpia_navigatorStatus==='1')?('selected'):(''))?>>Yes</option>
-					<option value="0" <?=(($wpia_navigatorStatus==='0')?('selected'):(''))?>>No</option>
+					<option value="1" <?=(($wpia_navigatorStatus==='1')?('selected'):(''))?>>SI</option>
+					<option value="0" <?=(($wpia_navigatorStatus==='0')?('selected'):(''))?>>NO</option>
 				</select>
 				
 			</td>
 			<th>
-				Nav. position:
+				Posizione:
 			</th>
 			<td>
 				<select name="wpia_navigatorPosition" id="wpia_navigatorPosition">
-					<option value="vt-inner" <?=(($wpia_navigatorPosition==='vt-inner')?('selected'):(''))?>>Inner</option>
-					<option value="" <?=(($wpia_navigatorPosition==='')?('selected'):(''))?>>Outer</option>
+					<option value="vt-inner" <?=(($wpia_navigatorPosition==='vt-inner')?('selected'):(''))?>>Interno</option>
+					<option value="" <?=(($wpia_navigatorPosition==='')?('selected'):(''))?>>Esterno</option>
 				</select>
 				
 			</td>	
 			<th>
-				Title:
+				Titolo:
 			</th>
 			<td>
 				<input type="text" name="wpia_navigatorTitle" id="wpia_navigatorTitle" value="<?=esc_attr( $wpia_navigatorTitle )?>">
