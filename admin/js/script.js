@@ -50,23 +50,26 @@ jQuery(document).ready(function () {
 				
 				var req = jQuery.getJSON(  WPURLS.siteurl + "/wp-json/wp/v2/media/" + imgid )
 				  .done(function(data) {
-					jQuery(dialog).find("[data-wpvalue]").each(function(){
-						var selector = this.dataset.wpvalue,
-							WPValue = data;
-						
-							var selectors = selector.split(".");
-							while(selectors.length && (WPValue = WPValue[selectors.shift()]));
-							value = WPValue;
-						
-							this.value = value;
-							this.classList.remove("updating");
-					}) 
+					if (data.message) {
+						alert(data.message);
+					} else  {
+						jQuery(dialog).find("[data-wpvalue]").each(function(){
+							var selector = this.dataset.wpvalue,
+								WPValue = data;
+							
+								var selectors = selector.split(".");
+								while(selectors.length && (WPValue = WPValue[selectors.shift()]));
+								value = WPValue;
+							
+								this.value = value;
+								this.classList.remove("updating");
+						})
+					}					
 				  })
-				  .fail(function() {
-					console.log( "error" );
+				  .fail(function( jqxhr, textStatus, error) {
+					var err = textStatus + " - " + error;
+					alert( "Impossibile completare la richiesta: " + err );
 				  });				
-				  
-				
 			} else {
 				$upload_imgTagger.val(imgurl);
 				$tagger.attr("src", imgurl);
@@ -76,7 +79,7 @@ jQuery(document).ready(function () {
 			original_tb_remove();
 			
 		} else {
-			original_send_to_editor();
+			original_send_to_editor(html);
 		}
     };
 });

@@ -72,7 +72,7 @@ class WPIA_Metaboxes {
 			<p>Immagine da annotare.</p>
 			<div class="upload-fields">
 				<input id="upload_image" type="text" size="36" name="upload_image" value="<?php echo $image; ?>" />
-				<input id="upload_image_button" type="button" value="<?php _e( 'Scegli il file', 'image-annotator' ); ?>" />
+				<input id="upload_image_button" type="button" value="<?php _e( 'Scegli immagine', 'image-annotator' ); ?>" />
 			</div>
 		</div>
 		<div id="work-area">
