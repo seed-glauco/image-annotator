@@ -128,7 +128,16 @@ class WPIA_Metaboxes {
 			<td>
 				<input type="text" name="wpia_navigatorTitle" id="wpia_navigatorTitle" value="<?=esc_attr( $wpia_navigatorTitle )?>">
 				
-			</td>			
+			</td>	
+			<?php
+			
+			if ( !empty( $image ) || !empty( $wpia_navigatorTitle )):
+			?>
+			  <input type="hidden" name="wpia_resetMeta" id="wpia_resetMeta" value="0"/>
+			  <td align="right" width="50%"><button style="background-color: red;color: white;" onclick="if (confirm('Tutti i dati inseriti per questa mappa verranno eliminati!.\n\nSei sicuro?')) {document.getElementById('wpia_resetMeta').value='1'; return true;} else {return false;}">ELIMINA</button></td>
+			<?php
+			endif;	
+			?>
 		</tr>
 	</table>
 </div>
@@ -175,15 +184,24 @@ class WPIA_Metaboxes {
 		if ( wp_is_post_revision( $post_id ) ) {
 			return;
 		}
-
-		update_post_meta( $post_id, 'wpia_annotation_image', $_POST['upload_image'] );
-		update_post_meta( $post_id, 'wpia_annotation_data', $_POST['image_annotation'] );
-		update_post_meta( $post_id, 'wpia_annotation_canvas_size', $_POST['original_size'] );
-
-		update_post_meta( $post_id, 'wpia_navigatorStatus', $_POST['wpia_navigatorStatus'] );
-		update_post_meta( $post_id, 'wpia_navigatorPosition', $_POST['wpia_navigatorPosition'] );
-		update_post_meta( $post_id, 'wpia_navigatorTitle', $_POST['wpia_navigatorTitle'] );
 		
+		if ($_POST['wpia_resetMeta'] == '1'):
+			delete_post_meta( $post_id, 'wpia_annotation_image');
+			delete_post_meta( $post_id, 'wpia_annotation_data');
+			delete_post_meta( $post_id, 'wpia_annotation_canvas_size');
+
+			delete_post_meta( $post_id, 'wpia_navigatorStatus');
+			delete_post_meta( $post_id, 'wpia_navigatorPosition');
+			delete_post_meta( $post_id, 'wpia_navigatorTitle');
+		else:
+			update_post_meta( $post_id, 'wpia_annotation_image', $_POST['upload_image'] );
+			update_post_meta( $post_id, 'wpia_annotation_data', $_POST['image_annotation'] );
+			update_post_meta( $post_id, 'wpia_annotation_canvas_size', $_POST['original_size'] );
+
+			update_post_meta( $post_id, 'wpia_navigatorStatus', $_POST['wpia_navigatorStatus'] );
+			update_post_meta( $post_id, 'wpia_navigatorPosition', $_POST['wpia_navigatorPosition'] );
+			update_post_meta( $post_id, 'wpia_navigatorTitle', $_POST['wpia_navigatorTitle'] );
+		endif;
 		
 	}
 
