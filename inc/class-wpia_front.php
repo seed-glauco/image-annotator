@@ -15,10 +15,19 @@ class WPIA_Front {
 		//add_action( 'wp_enqueue_scripts', array( $this, 'add_scripts_styles' ) );
 		//Adds the shortcode button in the TinyMCE editor
 		//add_action( 'init', array( $this, 'shortcode_button' ) );
-
 		//Adds annotation JSON to the header so they can be loaded
 		add_action( 'admin_print_scripts', array( $this, 'admin_scripts_styles' ) );
-		add_filter( 'the_content', array( $this, 'the_content' ) );
+		
+		$vanilla_tagger_where_show = 'the_content';
+		if ( !empty( get_option( 'vanilla_tagger_where_show' ) ) ):
+			$vanilla_tagger_where_show = get_option( 'vanilla_tagger_where_show' );
+		endif;
+		
+		if ( $vanilla_tagger_where_show == 'the_content' ):
+			add_filter( 'the_content', array( $this, 'the_content' ) );
+		elseif ( $vanilla_tagger_where_show == 'get_footer' ):
+			add_action( 'get_footer', array( $this, 'get_footer' ) );
+		endif;
 	}
 
 	function the_content( $content ) {
@@ -36,6 +45,20 @@ class WPIA_Front {
 		return $content;
 	}
 
+	function get_footer() {
+		if ( isset( $GLOBALS['post'] ) && get_option( "vanilla-tagger-settings-pt-" . $GLOBALS['post']->post_type ) == 'yes' && !is_admin() && is_singular() ) :
+
+			$wpia_navigatorStatus = get_post_meta( $GLOBALS['post']->ID, 'wpia_navigatorStatus', true );
+			$wpia_navigatorPosition = get_post_meta( $GLOBALS['post']->ID, 'wpia_navigatorPosition', true );
+			$wpia_navigatorTitle = get_post_meta( $GLOBALS['post']->ID, 'wpia_navigatorTitle', true );
+			$sc = '[wpia_image id="' . $GLOBALS['post']->ID . '" navigator="' . $wpia_navigatorStatus . '" placeholder="navigator-placeholder-' . $GLOBALS['post']->ID . '" title="' . esc_attr( $wpia_navigatorTitle ) . '" position="' . $wpia_navigatorPosition . '"]';
+
+			echo do_shortcode( $sc );
+
+		endif;
+		//return $content;
+	}
+	
 	// Add shortcode and return output
 	public function shortcode( $atts ) {
 
@@ -79,7 +102,7 @@ class WPIA_Front {
 
 		//Query args to get annotated image
 		$args = array(
-			'post_type' => 'any', 
+			'post_type' => 'any',
 			'posts_per_page' => 1,
 			'p' => $atts['id']
 		);

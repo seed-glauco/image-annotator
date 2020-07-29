@@ -82,7 +82,12 @@ class WPIA_Admin {
 		$vanilla_tagger_editor_webc = file_get_contents( VANILLA_TAGGER_EDITOR_WEBC_JS_FILE );
 		$vanilla_tagger_navigation_webc = file_get_contents( VANILLA_TAGGER_NAVIGATION_WEBC_JS_FILE );
 		$vanilla_tagger_webc = file_get_contents( VANILLA_TAGGER_WEBC_JS_FILE );
+		$vanilla_tagger_where_show = 'the_content';
 
+		if ( !empty( get_option( 'vanilla_tagger_where_show' ) ) ):
+			$vanilla_tagger_where_show = get_option( 'vanilla_tagger_where_show' );
+		endif;
+		
 		if ( !empty( get_option( 'vanilla_tagger_editor' ) ) ):
 			$vanilla_tagger_editor = get_option( 'vanilla_tagger_editor' );
 		endif;
@@ -165,7 +170,22 @@ class WPIA_Admin {
 						</td>
 					</tr>						
 
+					<tr valign="top">
+						<th scope="row">Dove nel FrontEnd?</th>
+						<td>
+							<select name="vanilla_tagger_where_show" id="vanilla_tagger_where_show">
+								<option value="none" <?=(selected( get_option( "vanilla_tagger_where_show" ), "none" ))?> >Non mostrare</option>
+								<option value="the_content" <?=(selected( get_option( "vanilla_tagger_where_show" ), "the_content" ))?> >Dopo il Content</option>
+								<option value="get_footer" <?=(selected( get_option( "vanilla_tagger_where_show" ), "get_footer" ))?>>Prima del footer</option>
+							</select>
 
+					
+						</td>
+					</tr>
+					
+					
+					
+					
 				</table>
 
 				<?php submit_button(); ?>
@@ -191,6 +211,9 @@ class WPIA_Admin {
 		register_setting( 'image-annotator-settings-group', 'vanilla_tagger_editor_webc', array( 'default' => $vanilla_tagger_editor_webc ) );
 		register_setting( 'image-annotator-settings-group', 'vanilla_tagger_navigation_webc', array( 'default' => $vanilla_tagger_navigation_webc ) );
 		register_setting( 'image-annotator-settings-group', 'vanilla_tagger_webc', array( 'default' => $vanilla_tagger_webc ) );
+
+		register_setting( 'image-annotator-settings-group', 'vanilla_tagger_where_show', array( 'default' => 'the_content' ) );
+
 
 		foreach ( get_post_types( array( 'public' => true, 'show_in_nav_menus' => true ), 'names' ) as $pt ) {
 			register_setting( 'image-annotator-settings-group', 'vanilla-tagger-settings-pt-' . $pt, array( 'default' => 'no' ) );
@@ -333,9 +356,9 @@ class WPIA_Admin {
 		  wp_enqueue_script( 'wpia-vtagger-editor-js', plugins_url( '../lib/vanilla-tagger/plugins/editor/vanilla-tagger-editor.webc.js', __FILE__ ), array( 'wpia-vtagger-js', 'wpia-vtagger-editor-tmpl-js' ) );
 		 */
 		wp_enqueue_script( 'wpia-admin-scripts', plugins_url( '../admin/js/script.js', __FILE__ ), array( 'media-upload', 'thickbox' ) );
-		
-		
-		wp_localize_script('wpia-admin-scripts', 'WPURLS', array( 'siteurl' => get_option('siteurl') ));
+
+
+		wp_localize_script( 'wpia-admin-scripts', 'WPURLS', array( 'siteurl' => get_option( 'siteurl' ) ) );
 	}
 
 	function add_current_json() {
